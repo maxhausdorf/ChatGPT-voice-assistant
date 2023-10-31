@@ -116,15 +116,15 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>To create a prompt, press the button below and start speaking.</h1>
+        <h1>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</h1>
         <div>
-          <button style={{color:"white", width: "350px", height:"90px", backgroundColor:"#5e79ff", border:"2px solid white", boxShadow:"none"}} onClick={runWorkFlow}>Record New Prompt</button>
-          <button style={{color:"white", width: "350px", height:"90px", backgroundColor:"#5e79ff", border:"2px solid white", boxShadow:"none"}} onClick={() => textToSpeech(responseData)}>Play ChatGPT response</button>
+          <button style={{color:"white", width: "350px", height:"90px", backgroundColor:"#CF3059", border:"2px solid white", boxShadow:"none"}} onClick={runWorkFlow}>Record New Prompt</button>
+          <button style={{color:"white", width: "350px", height:"90px", backgroundColor:"#59CF30", border:"2px solid white", boxShadow:"none"}} onClick={() => textToSpeech(responseData)}>Play ChatGPT response</button>
         </div>
-        <h4 style={{marginTop:"100px"}}>Prompt:</h4>
+        {/*<h4 style={{marginTop:"100px"}}>Prompt:</h4>
         <p>{lastPrompt}</p>
         <h4 style={{}}>Answer from ChatGPT:</h4>
-        <p>{responseData}</p>
+        <p>{responseData}</p>*/}
         <p style={{marginBottom:"0px", position:"absolute", bottom:"10px", right:"10px", fontSize:"12px"}}>Current Version: {packagejson.version}</p>
       </header>
     </div>
