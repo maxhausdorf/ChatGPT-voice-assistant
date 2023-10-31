@@ -101,9 +101,10 @@ function App() {
     //const generatedPrompt = "Give me 3 fun facts."
     if (generatedPrompt) {
       const response = await sendChatGptRequest(generatedPrompt);
+
       //requestGotSent = true;
       //console.log(requestGotSent);
-      textToSpeech(response);
+      //textToSpeech(response);
     } else {
       console.log("No request got sent to ChatGPT");
     }
@@ -118,6 +119,7 @@ function App() {
         <h1>To create a prompt, press the button below and start speaking.</h1>
         <div>
           <button style={{color:"white", width: "350px", height:"90px", backgroundColor:"#5e79ff", border:"2px solid white", boxShadow:"none"}} onClick={runWorkFlow}>Record New Prompt</button>
+          <button style={{color:"white", width: "350px", height:"90px", backgroundColor:"#5e79ff", border:"2px solid white", boxShadow:"none"}} onClick={() => textToSpeech(responseData)}>Play ChatGPT response</button>
         </div>
         <h4 style={{marginTop:"100px"}}>Prompt:</h4>
         <p>{lastPrompt}</p>
