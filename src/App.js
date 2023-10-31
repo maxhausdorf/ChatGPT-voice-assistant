@@ -2,6 +2,9 @@ import './App.css';
 import React, { useState } from 'react';
 import { OpenAIClient } from '@azure/openai';
 import { AzureKeyCredential } from '@azure/openai';
+import packagejson from '../package.json';
+
+
 function App() {
 
   const [lastPrompt, setLastPrompt] = useState('')
@@ -92,7 +95,10 @@ function App() {
 
   async function runWorkFlow() {
     //let requestGotSent;
+
+    //The line below got commented out because of no speech input possible (developing in library).
     const generatedPrompt = await sttFromMic();
+    //const generatedPrompt = "Give me 3 fun facts."
     if (generatedPrompt) {
       const response = await sendChatGptRequest(generatedPrompt);
       //requestGotSent = true;
@@ -117,6 +123,7 @@ function App() {
         <p>{lastPrompt}</p>
         <h4 style={{}}>Answer from ChatGPT:</h4>
         <p>{responseData}</p>
+        <p style={{marginBottom:"0px", position:"absolute", bottom:"10px", right:"10px", fontSize:"12px"}}>Current Version: {packagejson.version}</p>
       </header>
     </div>
   );
