@@ -19,3 +19,7 @@ This is a first step to find the issue to why the response is not read (after ge
 - Commented out unnecessary UI elements only needed for development.
 - Adapted introductional text to introduce the 'play' button for the ChatGPT response.
 - Color of buttons
+
+## [1.0.1] - 2023-11-03
+### Changed
+- Renamed prompt input button

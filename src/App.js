@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { OpenAIClient } from '@azure/openai';
 import { AzureKeyCredential } from '@azure/openai';
 import packagejson from '../package.json';
@@ -118,14 +118,25 @@ function App() {
       <header className="App-header">
         <h1>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</h1>
         <div>
-          <button style={{color:"white", width: "350px", height:"90px", backgroundColor:"#CF3059", border:"2px solid white", boxShadow:"none"}} onClick={runWorkFlow}>Record New Prompt</button>
-          <button style={{color:"white", width: "350px", height:"90px", backgroundColor:"#59CF30", border:"2px solid white", boxShadow:"none"}} onClick={() => textToSpeech(responseData)}>Play ChatGPT response</button>
+          <button
+            style={{ color: "white", width: "350px", height: "90px", backgroundColor: "#CF3059", border: "2px solid white", boxShadow: "none" }}
+            onClick={runWorkFlow}
+          >
+            Speak in your prompt
+          </button>
+          <button
+            style={{ color: "white", width: "350px", height: "90px", backgroundColor: "#59CF30", border: "2px solid white", boxShadow: "none" }}
+            onClick={() => textToSpeech(responseData)}
+            disabled={isPlaying}
+          >
+            Play ChatGPT response
+          </button>
         </div>
         {/*<h4 style={{marginTop:"100px"}}>Prompt:</h4>
         <p>{lastPrompt}</p>
         <h4 style={{}}>Answer from ChatGPT:</h4>
         <p>{responseData}</p>*/}
-        <p style={{marginBottom:"0px", position:"absolute", bottom:"10px", right:"10px", fontSize:"12px"}}>Current Version: {packagejson.version}</p>
+        <p style={{ marginBottom: "0px", position: "absolute", bottom: "10px", right: "10px", fontSize: "12px" }}>Current Version: {packagejson.version}</p>
       </header>
     </div>
   );
