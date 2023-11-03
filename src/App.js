@@ -127,7 +127,6 @@ function App() {
           <button
             style={{ color: "white", width: "350px", height: "90px", backgroundColor: "#59CF30", border: "2px solid white", boxShadow: "none" }}
             onClick={() => textToSpeech(responseData)}
-            disabled={isPlaying}
           >
             Play ChatGPT response
           </button>

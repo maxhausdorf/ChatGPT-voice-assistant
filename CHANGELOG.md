@@ -23,3 +23,7 @@ This is a first step to find the issue to why the response is not read (after ge
 ## [1.0.1] - 2023-11-03
 ### Changed
 - Renamed prompt input button
+
+## [1.0.2] - 2023-11-03
+### Changed
+- Bugfix
