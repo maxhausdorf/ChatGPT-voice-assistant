@@ -28,6 +28,9 @@ function App() {
     return response;
   }
 
+  
+
+
   async function sttFromMic() {
 
     return new Promise((resolve, reject) => {
@@ -56,15 +59,23 @@ function App() {
     });
   }
 
-  const [player, updatePlayer] = useState({ p: undefined, muted: false });
+  const [isPlaying, setIsPlaying] = useState(false);
 
   function textToSpeech(textToSpeak) {
     const sdk = require("microsoft-cognitiveservices-speech-sdk");
     const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.REACT_APP_SPEECH_KEY, process.env.REACT_APP_SPEECH_REGION);
     const myPlayer = new sdk.SpeakerAudioDestination();
-    //updatePlayer(p => {p.p = myPlayer; return p;});
-    updatePlayer({ p: myPlayer, muted: false });
-    const audioConfig = sdk.AudioConfig.fromSpeakerOutput(player.p);
+    myPlayer.onAudioStart = () => {
+      setIsPlaying(true);
+      console.log("Set started playing right now!");
+    }
+
+    myPlayer.onAudioEnd = () => {
+      setIsPlaying(false);
+      console.log("Set stopped playing right now!");
+    }
+
+    const audioConfig = sdk.AudioConfig.fromSpeakerOutput(myPlayer);
 
     let synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
 
@@ -121,12 +132,14 @@ function App() {
           <button
             style={{ color: "white", width: "350px", height: "90px", backgroundColor: "#CF3059", border: "2px solid white", boxShadow: "none" }}
             onClick={runWorkFlow}
+            disabled={isPlaying}
           >
             Speak in your prompt
           </button>
           <button
             style={{ color: "white", width: "350px", height: "90px", backgroundColor: "#59CF30", border: "2px solid white", boxShadow: "none" }}
             onClick={() => textToSpeech(responseData)}
+            disabled={isPlaying}
           >
             Play ChatGPT response
           </button>

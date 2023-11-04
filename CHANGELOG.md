@@ -27,3 +27,9 @@ This is a first step to find the issue to why the response is not read (after ge
 ## [1.0.2] - 2023-11-03
 ### Changed
 - Bugfix
+
+## [1.1.0] - 2023-11-04
+### Changed
+- Major bugfix. It is now not possible anymore to click on the 'speak in prompt' or 'play chatgpt response' button
+if there is already a speech output happening. This was done by using the onAudioStart and onAudioEnd property. Hurray!
+
