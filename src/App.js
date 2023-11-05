@@ -131,14 +131,14 @@ function App() {
         <h6>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</h6>
         <div>
           <button
-            style={{ color: "white", width: "350px", height: "90px", backgroundColor: "#CF3059", border: "2px solid white", boxShadow: "none" }}
+            style={{ color: "white", width: "350px", height: "90px", backgroundColor: "#F05039", border: "2px solid white", boxShadow: "none" }}
             onClick={runWorkFlow}
             disabled={isPlaying}
           >
             Speak in your prompt
           </button>
           <button
-            style={{ color: "white", width: "350px", height: "90px", backgroundColor: "#59CF30", border: "2px solid white", boxShadow: "none" }}
+            style={{ color: "white", width: "350px", height: "90px", backgroundColor: "#1F449C", border: "2px solid white", boxShadow: "none" }}
             onClick={() => textToSpeech(responseData)}
             disabled={isPlaying}
           >

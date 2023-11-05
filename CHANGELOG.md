@@ -38,3 +38,7 @@ if there is already a speech output happening. This was done by using the onAudi
 - Prompts and answers are currently visible again. Will get transformed into a chat into the future.
 ### Added
 - There is now audio feedback when the button "Speak in your prompt" gets pressed. When the speech got transformed into text, there is audio feedback again. The notification sounds are different, the first one goes from low pitch to high, the other one from high to low.
+
+## [1.2.1] - 2023-11-05
+### Changed
+- Color buttons are now red and blue.
