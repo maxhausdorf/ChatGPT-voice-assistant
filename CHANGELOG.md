@@ -33,3 +33,8 @@ This is a first step to find the issue to why the response is not read (after ge
 - Major bugfix. It is now not possible anymore to click on the 'speak in prompt' or 'play chatgpt response' button
 if there is already a speech output happening. This was done by using the onAudioStart and onAudioEnd property. Hurray!
 
+## [1.2.0] - 2023-11-05
+### Changed
+- Prompts and answers are currently visible again. Will get transformed into a chat into the future.
+### Added
+- There is now audio feedback when the button "Speak in your prompt" gets pressed. When the speech got transformed into text, there is audio feedback again. The notification sounds are different, the first one goes from low pitch to high, the other one from high to low.

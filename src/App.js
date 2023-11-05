@@ -28,9 +28,6 @@ function App() {
     return response;
   }
 
-  
-
-
   async function sttFromMic() {
 
     return new Promise((resolve, reject) => {
@@ -104,12 +101,16 @@ function App() {
 
   }
 
-  async function runWorkFlow() {
-    //let requestGotSent;
+  const audioStartRef = React.useRef(new Audio('/ChatGPT-voice-assistant/Recording_Sound_Start.m4a'));
+  const audioEndRef = React.useRef(new Audio('/ChatGPT-voice-assistant/Recording_Sound_End.m4a'));
 
-    //The line below got commented out because of no speech input possible (developing in library).
+  async function runWorkFlow() {
+
+    audioStartRef.current.play();
+
     const generatedPrompt = await sttFromMic();
-    //const generatedPrompt = "Give me 3 fun facts."
+    audioEndRef.current.play();
+
     if (generatedPrompt) {
       const response = await sendChatGptRequest(generatedPrompt);
 
@@ -127,7 +128,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</h1>
+        <h6>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</h6>
         <div>
           <button
             style={{ color: "white", width: "350px", height: "90px", backgroundColor: "#CF3059", border: "2px solid white", boxShadow: "none" }}
@@ -144,10 +145,10 @@ function App() {
             Play ChatGPT response
           </button>
         </div>
-        {/*<h4 style={{marginTop:"100px"}}>Prompt:</h4>
+        <h4 style={{ marginTop: "100px" }}>Prompt:</h4>
         <p>{lastPrompt}</p>
         <h4 style={{}}>Answer from ChatGPT:</h4>
-        <p>{responseData}</p>*/}
+        <p>{responseData}</p>
         <p style={{ marginBottom: "0px", position: "absolute", bottom: "10px", right: "10px", fontSize: "12px" }}>Current Version: {packagejson.version}</p>
       </header>
     </div>
