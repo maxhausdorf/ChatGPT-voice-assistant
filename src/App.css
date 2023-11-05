@@ -1,5 +1,15 @@
+* {
+  /*outline: solid red 2px;*/
+}
+
+
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  outline: solid blue 2px;
+  min-height: 100vh;
+
+
 }
 
 .App-logo {
@@ -14,14 +24,77 @@
 }
 
 .App-header {
+  /*outline: solid blue 2px;*/
   background-color: #282c34;
-  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-body {
+  /*outline: solid blue 2px;*/
+  flex: 1;
+  background-color: #282c34;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: flex-start;
   color: white;
+}
+
+.App-footer {
+  /*outline: solid blue 2px;*/
+  background-color: #282c34;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: end;
+  color: white;
+  padding-left: 17px;
+  padding-right: 17px;
+}
+
+.instruction-header {
+  color: white;
+  margin: 0px;
+}
+
+.chat {
+  /*outline: solid green 10px;*/
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  width: 100%;
+  max-width: 50rem;
+  justify-content: space-evenly;
+}
+
+.header-chat {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.chat-user {
+  /*outline: solid yellow 2px;*/
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: start;
+}
+
+.chat-ai {
+  /*outline: solid yellow 2px;*/
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: end;
+  text-align: right;
+
 }
 
 .App-link {
@@ -32,6 +105,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

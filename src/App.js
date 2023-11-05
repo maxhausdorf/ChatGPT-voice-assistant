@@ -128,29 +128,42 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h6>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</h6>
-        <div>
-          <button
-            style={{ color: "white", width: "350px", height: "90px", backgroundColor: "#F05039", border: "2px solid white", boxShadow: "none" }}
-            onClick={runWorkFlow}
-            disabled={isPlaying}
-          >
-            Speak in your prompt
-          </button>
-          <button
-            style={{ color: "white", width: "350px", height: "90px", backgroundColor: "#1F449C", border: "2px solid white", boxShadow: "none" }}
-            onClick={() => textToSpeech(responseData)}
-            disabled={isPlaying}
-          >
-            Play ChatGPT response
-          </button>
-        </div>
-        <h4 style={{ marginTop: "100px" }}>Prompt:</h4>
-        <p>{lastPrompt}</p>
-        <h4 style={{}}>Answer from ChatGPT:</h4>
-        <p>{responseData}</p>
-        <p style={{ marginBottom: "0px", position: "absolute", bottom: "10px", right: "10px", fontSize: "12px" }}>Current Version: {packagejson.version}</p>
+        {/*<div>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</div>*/}
+        <h6 className='instruction-header'>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</h6>
       </header>
+      <div className='App-body'>
+        <button
+          style={{ color: "white", width: "100%", maxWidth: '20rem', height: "5vh", backgroundColor: "#F05039", border: "2px solid white", boxShadow: "none", margin: '20px' }}
+          onClick={runWorkFlow}
+          disabled={isPlaying}
+        >
+          Speak in your prompt
+        </button>
+        <button
+          style={{ color: "white", width: "100%", maxWidth: '20rem', height: "5vh", backgroundColor: "#1F449C", border: "2px solid white", boxShadow: "none" }}
+          onClick={() => textToSpeech(responseData)}
+          disabled={isPlaying}
+        >
+          Play ChatGPT response
+        </button>
+        <div className='chat'>
+          <div className='header-chat'>
+          <h4>Prompt:</h4>
+          <h4>Answer from ChatGPT:</h4>
+          </div>
+          <div className='chat-user'>
+
+            <p>{lastPrompt}</p>
+          </div>
+          <div className='chat-ai'>
+            <p>{responseData}</p>
+          </div>
+        </div>
+      </div>
+      <footer className='App-footer'>
+        <p>Current Version: {packagejson.version}</p>
+      </footer>
+
     </div>
   );
 }

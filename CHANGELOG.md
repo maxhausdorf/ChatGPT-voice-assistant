@@ -42,3 +42,7 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [1.2.1] - 2023-11-05
 ### Changed
 - Color buttons are now red and blue.
+
+## [2.0.0] - 2023-11-05
+### Changed
+- New Design and construction of the application. Included division into header, body and footer. In the header is a simple instruction. The body includes the two buttons and the chat. The footer currently only includes the versioning.
