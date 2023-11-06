@@ -58,3 +58,7 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [2.1.1] - 2023-11-06
 ### Changed
 - Reverted voice change because of performance reasons.
+
+## [3.0.0] - 2023-11-06
+### Added
+- The application now has access to all past chats. (Up until the browser window gets refreshed).
