@@ -148,15 +148,17 @@ function App() {
         </button>
         <div className='chat'>
           <div className='header-chat'>
-          <h4>Prompt:</h4>
-          <h4>Answer from ChatGPT:</h4>
+            <h4>Prompt:</h4>
+            <h4>Answer from ChatGPT:</h4>
           </div>
-          <div className='chat-user'>
+          <div className='content-chat'>
+            <div className='chat-user'>
 
-            <p>{lastPrompt}</p>
-          </div>
-          <div className='chat-ai'>
-            <p>{responseData}</p>
+              <p>{lastPrompt}</p>
+            </div>
+            <div className='chat-ai'>
+              <p>{responseData}</p>
+            </div>
           </div>
         </div>
       </div>

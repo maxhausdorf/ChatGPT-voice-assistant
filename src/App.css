@@ -79,22 +79,28 @@
   justify-content: space-between;
 }
 
+.content-chat {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .chat-user {
   /*outline: solid yellow 2px;*/
   display: flex;
   flex-direction: column;
-  flex: 1;
-  align-items: start;
+  align-items: flex-start;
+  width: 70%;
 }
 
 .chat-ai {
   /*outline: solid yellow 2px;*/
   display: flex;
   flex-direction: column;
-  flex: 1;
-  align-items: end;
+  align-items: flex-end;
   text-align: right;
-
+  width: 70%;
+  align-self: flex-end;
 }
 
 .App-link {

@@ -46,3 +46,7 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [2.0.0] - 2023-11-05
 ### Changed
 - New Design and construction of the application. Included division into header, body and footer. In the header is a simple instruction. The body includes the two buttons and the chat. The footer currently only includes the versioning.
+
+## [2.0.1] - 2023-11-06
+### Changed
+- Adapted width of prompt and answer containers to break paragraphs sooner.
