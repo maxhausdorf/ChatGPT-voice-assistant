@@ -50,3 +50,7 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [2.0.1] - 2023-11-06
 ### Changed
 - Adapted width of prompt and answer containers to break paragraphs sooner.
+
+## [2.1.0] - 2023-11-06
+### Changed
+- Changed the default voice to have a higher pitched male voice.

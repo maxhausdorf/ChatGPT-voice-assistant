@@ -61,6 +61,8 @@ function App() {
   function textToSpeech(textToSpeak) {
     const sdk = require("microsoft-cognitiveservices-speech-sdk");
     const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.REACT_APP_SPEECH_KEY, process.env.REACT_APP_SPEECH_REGION);
+    //The line below changes the default voice. In localhost this sometimes caused weird behaviour - keep that in mind.
+    speechConfig.speechSynthesisVoiceName = 'en-US-BrandonNeural';
     const myPlayer = new sdk.SpeakerAudioDestination();
     myPlayer.onAudioStart = () => {
       setIsPlaying(true);
