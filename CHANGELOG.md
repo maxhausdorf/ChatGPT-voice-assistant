@@ -62,3 +62,7 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [3.0.0] - 2023-11-06
 ### Added
 - The application now has access to all past chats. (Up until the browser window gets refreshed).
+
+## [3.1.0] - 2023-11-06
+### Added
+- All past chats now get displayed.

@@ -20,7 +20,7 @@ function App() {
       { role: "user", content: prompt }
     ]*/
     //const result = await client.getChatCompletions(deploymentId, messages);
-    
+
     const result = await client.getChatCompletions(deploymentId, chat);
     const response = result.choices[0].message.content;
     console.log("This is the response!");
@@ -114,6 +114,24 @@ function App() {
     });
   }
 
+  function ChatMessage({ role, content }) {
+    console.log(role)
+    console.log(typeof(role))
+    if (role === "user") {
+      return (
+        <div className='chat-user'>
+          <p>{content}</p>
+        </div>
+      )
+    } else if (role === "assistant") {
+      return (
+        <div className='chat-ai'>
+          <p>{content}</p>
+        </div>
+      )
+    }
+  }
+
 
   const audioStartRef = React.useRef(new Audio('/ChatGPT-voice-assistant/Recording_Sound_Start.m4a'));
   const audioEndRef = React.useRef(new Audio('/ChatGPT-voice-assistant/Recording_Sound_End.m4a'));
@@ -131,13 +149,13 @@ function App() {
 
     if (generatedPrompt) {
 
-      let userChatUpdate = await updateChat({role: "user", content: generatedPrompt});
+      let userChatUpdate = await updateChat({ role: "user", content: generatedPrompt });
       console.log("This is the updated chat after the prompt of the user:", userChatUpdate);
 
 
       const response = await sendChatGptRequest(userChatUpdate);
 
-      let aiChatUpdate = await updateChat({role: "assistant", content: response});
+      let aiChatUpdate = await updateChat({ role: "assistant", content: response });
       console.log("This is the updated chat after the reply of chatGPT:", aiChatUpdate);
 
       //requestGotSent = true;
@@ -178,13 +196,16 @@ function App() {
             <h4>Answer from ChatGPT:</h4>
           </div>
           <div className='content-chat'>
-            <div className='chat-user'>
-
+            {/*<div className='chat-user'>
               <p>{lastPrompt}</p>
             </div>
             <div className='chat-ai'>
               <p>{responseData}</p>
-            </div>
+            </div>*/}
+            {chat.map((message, index) => (
+             <ChatMessage key={index} role={message.role} content={message.content}/> 
+            ))
+            }
           </div>
         </div>
       </div>
