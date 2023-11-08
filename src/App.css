@@ -103,6 +103,13 @@
   align-self: flex-end;
 }
 
+.play-audio-button {
+  color: white;
+  height: 5;
+  background-color: #1F449C;
+  border: 1px solid white;
+}
+
 .App-link {
   color: #61dafb;
 }

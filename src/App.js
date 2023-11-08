@@ -67,15 +67,15 @@ function App() {
   let synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfigTTS);
 
   function pauseAudio() {
-      myPlayerRef.current.pause();
-      setIsPlaying(false);
-      setIsPaused(true);
+    myPlayerRef.current.pause();
+    setIsPlaying(false);
+    setIsPaused(true);
   }
 
   function resumeAudio() {
-      myPlayerRef.current.resume();
-      setIsPlaying(true);
-      setIsPaused(false);
+    myPlayerRef.current.resume();
+    setIsPlaying(true);
+    setIsPaused(false);
   }
 
   function textToSpeech(textToSpeak) {
@@ -132,18 +132,18 @@ function App() {
       return (
         <div className='chat-user'>
           <p>{content}</p>
-          {!isPlaying && (<button onClick={() => (textToSpeech(content))}>Play Prompt</button>)}
-          {isPlaying && (<button onClick={() => (pauseAudio())} >Pause</button>)}
-          {isPlaying || isPaused &&( <button onClick={() => (resumeAudio())}  >Resume</button>)}
+          {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Prompt</button>)}
+          {isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())} >Pause</button>)}
+          {isPlaying || isPaused && (<button style={{marginTop:"10px"}} className="play-audio-button" onClick={() => (resumeAudio())}  >Resume</button>)}
         </div>
       )
     } else if (role === "assistant") {
       return (
         <div className='chat-ai'>
           <p>{content}</p>
-          {!isPlaying && (<button onClick={() => (textToSpeech(content))}>Play Answer</button>)}
-          {isPlaying && (<button onClick={() => (pauseAudio())}>Pause</button>)}
-          {isPlaying || (isPaused &&(<button onClick={() => (resumeAudio())} >Resume</button>))}
+          {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Answer</button>)}
+          {isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())}>Pause</button>)}
+          {isPlaying || (isPaused && (<button style={{marginTop:"10px"}} className="play-audio-button" onClick={() => (resumeAudio())} >Resume</button>))}
         </div>
       )
     }
@@ -206,7 +206,7 @@ function App() {
           disabled={isPlaying}
         >
           Play last ChatGPT response
-  </button>
+        </button>
         <div className='chat'>
           <div className='header-chat'>
             <h4>Prompt:</h4>

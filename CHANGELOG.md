@@ -78,3 +78,7 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [4.1.1] - 2023-11-08
 ### Changed
 - Removed bug. isPaused gets set to false if "play prompt" gets pressed.
+
+## [4.1.2] - 2023-11-08
+### Changed
+- Changed the css styles of the new buttons.
