@@ -72,5 +72,9 @@ if there is already a speech output happening. This was done by using the onAudi
 - Prompts and answers can now each get played, paused and resumed. Changed the general play chatgpt response button to "Play LAST ChatGPT response".
 
 ## [4.1.0] - 2023-11-08
-### Added
+### Changed
 - Buttons now do not get disabled but get removed such that ScreenReader does not read them.
+
+## [4.1.1] - 2023-11-08
+### Changed
+- Removed bug. isPaused gets set to false if "play prompt" gets pressed.

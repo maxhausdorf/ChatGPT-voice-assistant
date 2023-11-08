@@ -80,6 +80,7 @@ function App() {
 
   function textToSpeech(textToSpeak) {
     myPlayer.onAudioStart = () => {
+      setIsPaused(false);
       setIsPlaying(true);
       console.log("Set started playing right now!");
     }
