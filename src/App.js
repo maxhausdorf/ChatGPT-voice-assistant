@@ -131,18 +131,18 @@ function App() {
       return (
         <div className='chat-user'>
           <p>{content}</p>
-          <button onClick={() => (textToSpeech(content))} disabled={isPlaying}>Play Prompt</button>
-          <button onClick={() => (pauseAudio())} disabled={!isPlaying}>Pause</button>
-          <button onClick={() => (resumeAudio())}  disabled={isPlaying}>Resume</button>
+          {!isPlaying && (<button onClick={() => (textToSpeech(content))}>Play Prompt</button>)}
+          {isPlaying && (<button onClick={() => (pauseAudio())} >Pause</button>)}
+          {isPlaying || isPaused &&( <button onClick={() => (resumeAudio())}  >Resume</button>)}
         </div>
       )
     } else if (role === "assistant") {
       return (
         <div className='chat-ai'>
           <p>{content}</p>
-          <button onClick={() => (textToSpeech(content))} disabled={isPlaying}>Play Answer</button>
-          <button onClick={() => (pauseAudio())}>Pause</button>
-          <button onClick={() => (resumeAudio())}  disabled={isPlaying}>Resume</button>
+          {!isPlaying && (<button onClick={() => (textToSpeech(content))}>Play Answer</button>)}
+          {isPlaying && (<button onClick={() => (pauseAudio())}>Pause</button>)}
+          {isPlaying || (isPaused &&(<button onClick={() => (resumeAudio())} >Resume</button>))}
         </div>
       )
     }

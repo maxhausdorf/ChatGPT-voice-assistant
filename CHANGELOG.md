@@ -67,6 +67,10 @@ if there is already a speech output happening. This was done by using the onAudi
 ### Added
 - All past chats now get displayed.
 
-## [4.0.0] - 2023-11-06
+## [4.0.0] - 2023-11-08
 ### Added
 - Prompts and answers can now each get played, paused and resumed. Changed the general play chatgpt response button to "Play LAST ChatGPT response".
+
+## [4.1.0] - 2023-11-08
+### Added
+- Buttons now do not get disabled but get removed such that ScreenReader does not read them.
