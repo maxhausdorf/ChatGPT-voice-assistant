@@ -66,3 +66,7 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [3.1.0] - 2023-11-06
 ### Added
 - All past chats now get displayed.
+
+## [4.0.0] - 2023-11-06
+### Added
+- Prompts and answers can now each get played, paused and resumed. Changed the general play chatgpt response button to "Play LAST ChatGPT response".
