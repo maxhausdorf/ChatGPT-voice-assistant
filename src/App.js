@@ -127,12 +127,13 @@ function App() {
     });
   }
 
-  function ChatMessage({ role, content }) {
+  function ChatMessage({ role, content, index }) {
     if (role === "user") {
       return (
         <div className='chat-user'>
+          <h4>Prompt {index}</h4>
           <p>{content}</p>
-          {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Prompt</button>)}
+          {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Prompt {index}</button>)}
           {isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())} >Pause</button>)}
           {isPlaying || isPaused && (<button style={{marginTop:"10px"}} className="play-audio-button" onClick={() => (resumeAudio())}  >Resume</button>)}
         </div>
@@ -140,8 +141,9 @@ function App() {
     } else if (role === "assistant") {
       return (
         <div className='chat-ai'>
+          <h4>Answer {index-1}</h4>
           <p>{content}</p>
-          {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Answer</button>)}
+          {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Answer {index-1}</button>)}
           {isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())}>Pause</button>)}
           {isPlaying || (isPaused && (<button style={{marginTop:"10px"}} className="play-audio-button" onClick={() => (resumeAudio())} >Resume</button>))}
         </div>
@@ -189,8 +191,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <h1>Welcome to the ChatGPT Voice Assistant</h1>
         {/*<div>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</div>*/}
-        <h6 className='instruction-header'>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</h6>
+        <h2 className='instruction-header'>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</h2>
       </header>
       <div className='App-body'>
         <button
@@ -209,8 +212,8 @@ function App() {
         </button>
         <div className='chat'>
           <div className='header-chat'>
-            <h4>Prompt:</h4>
-            <h4>Answer from ChatGPT:</h4>
+            <h3>Prompt:</h3>
+            <h3>Answer from ChatGPT:</h3>
           </div>
           <div className='content-chat'>
             {/*<div className='chat-user'>
@@ -220,9 +223,8 @@ function App() {
               <p>{responseData}</p>
             </div>*/}
             {chat.map((message, index) => (
-              <ChatMessage key={index} role={message.role} content={message.content} />
-            ))
-            }
+              <ChatMessage index={index} key={index} role={message.role} content={message.content} />
+            ))}
           </div>
         </div>
       </div>

@@ -86,3 +86,7 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [4.1.3] - 2023-11-09
 ### Changed
 - Changed Index Name in <title> element to ChatGPT-voice-assistant
+
+## [4.1.4] - 2023-11-09
+### Changed
+- Started adapting the header structure
