@@ -82,3 +82,7 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [4.1.2] - 2023-11-08
 ### Changed
 - Changed the css styles of the new buttons.
+
+## [4.1.3] - 2023-11-09
+### Changed
+- Changed Index Name in <title> element to ChatGPT-voice-assistant
