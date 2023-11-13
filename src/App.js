@@ -128,12 +128,14 @@ function App() {
   }
 
   function ChatMessage({ role, content, index }) {
+
+    const pairIndex = Math.ceil(index / 2);
     if (role === "user") {
       return (
         <div className='chat-user'>
-          <h4>Prompt {index}</h4>
+          <h4>Prompt {pairIndex}</h4>
           <p>{content}</p>
-          {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Prompt {index}</button>)}
+          {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Prompt {pairIndex}</button>)}
           {isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())} >Pause</button>)}
           {isPlaying || isPaused && (<button style={{marginTop:"10px"}} className="play-audio-button" onClick={() => (resumeAudio())}  >Resume</button>)}
         </div>
@@ -141,9 +143,9 @@ function App() {
     } else if (role === "assistant") {
       return (
         <div className='chat-ai'>
-          <h4>Answer {index-1}</h4>
+          <h4>Answer {pairIndex}</h4>
           <p>{content}</p>
-          {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Answer {index-1}</button>)}
+          {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Answer {pairIndex}</button>)}
           {isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())}>Pause</button>)}
           {isPlaying || (isPaused && (<button style={{marginTop:"10px"}} className="play-audio-button" onClick={() => (resumeAudio())} >Resume</button>))}
         </div>

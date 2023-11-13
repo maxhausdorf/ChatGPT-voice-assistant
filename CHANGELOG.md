@@ -90,3 +90,7 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [4.1.4] - 2023-11-09
 ### Changed
 - Started adapting the header structure
+
+## [4.1.5] - 2023-13-09
+### Changed
+- Bugfix: Numbering of prompts and answers was wrong
