@@ -181,7 +181,7 @@ function App() {
 
       //requestGotSent = true;
       //console.log(requestGotSent);
-      //textToSpeech(response);
+      textToSpeech(response);
     } else {
       console.log("No request got sent to ChatGPT");
     }

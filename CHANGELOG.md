@@ -94,3 +94,7 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [4.1.5] - 2023-13-09
 ### Changed
 - Bugfix: Numbering of prompts and answers was wrong
+
+## [4.1.6] - 2023-13-09
+### Changed
+- Autoplay: for testing purposes this version will include autoplay after answer generation. Will restore if this feature does not work during testing.
