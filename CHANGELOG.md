@@ -98,3 +98,7 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [4.1.6] - 2023-13-09
 ### Changed
 - Autoplay: for testing purposes this version will include autoplay after answer generation. Will restore if this feature does not work during testing.
+
+## [4.1.7] - 2023-15-09
+### Changed
+- Bugfix: During a recording the "Speak in prompt" button now gets disabled.
