@@ -108,3 +108,9 @@ if there is already a speech output happening. This was done by using the onAudi
 - A focused element now has a blue border.
 ### Changed
 - After a prompt has been read, the focus automatically switches to the "Speak in your prompt" button.
+
+## [4.1.9] - 2023-17-09
+### Changed
+- Introduced some major design changes:
+    - Included chat bubbles for the user and GPT and gave it a "chat-like" feel
+    - Support even better response for mobile view
