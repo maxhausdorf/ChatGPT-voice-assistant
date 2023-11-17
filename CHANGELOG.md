@@ -102,3 +102,9 @@ if there is already a speech output happening. This was done by using the onAudi
 ## [4.1.7] - 2023-15-09
 ### Changed
 - Bugfix: During a recording the "Speak in prompt" button now gets disabled.
+
+## [4.1.8] - 2023-17-09
+### Added
+- A focused element now has a blue border.
+### Changed
+- After a prompt has been read, the focus automatically switches to the "Speak in your prompt" button.

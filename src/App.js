@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { OpenAIClient } from '@azure/openai';
 import { AzureKeyCredential } from '@azure/openai';
 import packagejson from '../package.json';
@@ -118,6 +118,14 @@ function App() {
 
   }
 
+  const speakInPromptBtnRef = useRef(null);
+
+  useEffect(() => {
+    if (!isPlaying) {
+      speakInPromptBtnRef.current.focus();
+    }
+  }, [isPlaying]);
+
   function updateChat(message) {
     return new Promise(resolve => {
       setChat(prevChat => {
@@ -138,7 +146,7 @@ function App() {
           <p>{content}</p>
           {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Prompt {pairIndex}</button>)}
           {isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())} >Pause</button>)}
-          {isPlaying || isPaused && (<button style={{marginTop:"10px"}} className="play-audio-button" onClick={() => (resumeAudio())}  >Resume</button>)}
+          {isPlaying || (isPaused && (<button style={{ marginTop: "10px" }} className="play-audio-button" onClick={() => (resumeAudio())}  >Resume</button>))}
         </div>
       )
     } else if (role === "assistant") {
@@ -148,7 +156,7 @@ function App() {
           <p>{content}</p>
           {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Answer {pairIndex}</button>)}
           {isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())}>Pause</button>)}
-          {isPlaying || (isPaused && (<button style={{marginTop:"10px"}} className="play-audio-button" onClick={() => (resumeAudio())} >Resume</button>))}
+          {isPlaying || (isPaused && (<button style={{ marginTop: "10px" }} className="play-audio-button" onClick={() => (resumeAudio())} >Resume</button>))}
         </div>
       )
     }
@@ -205,6 +213,7 @@ function App() {
           style={{ color: "white", width: "100%", maxWidth: '20rem', height: "5vh", backgroundColor: "#F05039", border: "2px solid white", boxShadow: "none", margin: '20px' }}
           onClick={runWorkFlow}
           disabled={isPlaying || isRecording}
+          ref={speakInPromptBtnRef}
         >
           Speak in your prompt
         </button>
