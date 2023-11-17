@@ -170,3 +170,36 @@ p {
 .App-link {
   color: #61dafb;
 }
+
+.audio-controls {
+  display: flex;
+  box-sizing: border-box;
+
+}
+
+.resume-button {
+  display: flex;
+  box-sizing: border-box;
+  position: relative;
+  font-size: 40px;
+  margin-top: 10px;
+}
+
+.circle-icon {
+  
+}
+
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 58%;
+  transform: translate(-50%, -50%);
+  font-size: 25px;
+}
+
+.bar-icon {
+  position: absolute;
+  top: 50%;
+  left: 37%;
+  transform: translate(-50%, -50%) rotate(90deg) scaleX(0.63) scaleY(0.9);
+}

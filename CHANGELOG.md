@@ -114,3 +114,13 @@ if there is already a speech output happening. This was done by using the onAudi
 - Introduced some major design changes:
     - Included chat bubbles for the user and GPT and gave it a "chat-like" feel
     - Support even better response for mobile view
+
+## [4.1.9] - 2023-17-09
+### Changed
+- Introduced some major design changes:
+    - Included chat bubbles for the user and GPT and gave it a "chat-like" feel
+    - Support even better response for mobile view
+
+## [4.2.0] - 2023-17-09
+### Added
+- Replaced the buttons with icons

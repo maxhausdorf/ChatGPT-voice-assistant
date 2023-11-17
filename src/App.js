@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { OpenAIClient } from '@azure/openai';
 import { AzureKeyCredential } from '@azure/openai';
 import packagejson from '../package.json';
+import { MdPlayCircleOutline, MdOutlinePauseCircleOutline, MdOutlinePanoramaFishEye, MdPlayArrow, MdRemove } from "react-icons/md";
+
 
 
 function App() {
@@ -144,9 +146,19 @@ function App() {
         <div className='chat-user'>
           <h4>Prompt {pairIndex}</h4>
           <p>{content}</p>
-          {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Prompt {pairIndex}</button>)}
-          {isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())} >Pause</button>)}
-          {isPlaying || (isPaused && (<button style={{ marginTop: "10px" }} className="play-audio-button" onClick={() => (resumeAudio())}  >Resume</button>))}
+          <div className='audio-controls'>
+          {/*!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Prompt {pairIndex}</button>)*/}
+          {/*isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())} >Pause</button>)*/}
+          {/*isPlaying || (isPaused && (<button style={{ marginTop: "10px" }} className="play-audio-button" onClick={() => (resumeAudio())}  >Resume</button>))*/}
+          {!isPlaying && (<MdPlayCircleOutline style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content))} />)}
+          {isPlaying && (<MdOutlinePauseCircleOutline style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
+          {/*isPlaying || (isPaused && <MdPlayCircleOutline style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (resumeAudio())} />)*/}
+          {isPlaying || (isPaused && <div role='button' className='resume-button' onClick={() => (resumeAudio())}>
+            <MdOutlinePanoramaFishEye className='circle-icon'/>
+            <MdPlayArrow className='play-icon'/>
+            <MdRemove className='bar-icon'/>
+          </div>)}
+          </div>
         </div>
       )
     } else if (role === "assistant") {
@@ -154,9 +166,19 @@ function App() {
         <div className='chat-ai'>
           <h4>Answer {pairIndex}</h4>
           <p>{content}</p>
-          {!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Answer {pairIndex}</button>)}
-          {isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())}>Pause</button>)}
-          {isPlaying || (isPaused && (<button style={{ marginTop: "10px" }} className="play-audio-button" onClick={() => (resumeAudio())} >Resume</button>))}
+          <div className='audio-controls'>
+          {/*!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Answer {pairIndex}</button>)*/}
+          {/*isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())}>Pause</button>)*/}
+          {/*isPlaying || (isPaused && (<button style={{ marginTop: "10px" }} className="play-audio-button" onClick={() => (resumeAudio())} >Resume</button>))*/}
+          {!isPlaying && (<MdPlayCircleOutline role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content))} />)}
+          {isPlaying && (<MdOutlinePauseCircleOutline role='button' style={{ marginTop: "10px", fontSize: '40px'}} onClick={() => (pauseAudio())} />)}
+          {/*isPlaying || (isPaused && <MdPlayCircleOutline role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (resumeAudio())} />)*/}
+          {isPlaying || (isPaused && <div role='button' className='resume-button' onClick={() => (resumeAudio())}>
+            <MdOutlinePanoramaFishEye className='circle-icon'/>
+            <MdPlayArrow className='play-icon'/>
+            <MdRemove className='bar-icon'/>
+          </div>)}
+          </div>
         </div>
       )
     }
