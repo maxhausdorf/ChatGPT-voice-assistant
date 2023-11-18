@@ -27,6 +27,30 @@ function App() {
     return response;
   }
 
+  const [audioEnabled, setAudioEnabled] = useState(false);
+  const audioElementRef = useRef(new Audio());
+
+  //This function exists because of the autoplay barrier of iOS
+  //By playing a mp3 file without any noise recorded the user agrees to audio being played (apparently)
+  function toggleAudio() {
+    if (!audioEnabled) {
+      audioElementRef.current.src = '/ChatGPT-voice-assistant/one_minute_of_silence.mp3';
+      audioElementRef.current.play();
+    }
+    setAudioEnabled(!audioEnabled);
+    enableMicrophone();
+  }
+
+  //This function request access for the microphone from the user. Somehow this results in a decrease of the volume. TODO: investigate this and resolve this.
+  async function enableMicrophone() {
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      //Inform the user that the microphone is ready
+    } catch (error) {
+      //Still TODO: Handle the error (user denied access etc.)
+    }
+  }
+
   async function sttFromMic() {
 
     return new Promise((resolve, reject) => {
@@ -47,6 +71,7 @@ function App() {
           resolve(result.text);
         } else {
           const errorMessage = 'ERROR: Speech was cancelled or could not be recognized. Ensure your microphone is working properly.';
+          setResponseData(errorMessage); //this might solve one bug mentioned by orian. TODO: further investigate this!
           setLastPrompt(errorMessage);
           textToSpeech(errorMessage);
           resolve(null);
@@ -59,7 +84,7 @@ function App() {
   const [isPaused, setIsPaused] = useState(false);
 
   const myPlayerRef = React.useRef(null);
-  const synthesizerRef = React.useRef(null);
+  //const synthesizerRef = React.useRef(null);
 
   const sdk = require("microsoft-cognitiveservices-speech-sdk");
   const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.REACT_APP_SPEECH_KEY, process.env.REACT_APP_SPEECH_REGION);
@@ -94,7 +119,7 @@ function App() {
     }
 
     myPlayerRef.current = myPlayer;
-    synthesizerRef.current = synthesizer;
+    //synthesizerRef.current = synthesizer;
 
     console.log(`speaking text: ${textToSpeak}...`);
 
@@ -123,7 +148,7 @@ function App() {
   const speakInPromptBtnRef = useRef(null);
 
   useEffect(() => {
-    if (!isPlaying) {
+    if (!isPlaying && audioEnabled) {
       speakInPromptBtnRef.current.focus();
     }
   }, [isPlaying]);
@@ -138,6 +163,12 @@ function App() {
     });
   }
 
+  function handleClick() {
+    audioElementRef.current.src = '/ChatGPT-voice-assistant/one_minute_of_silence.mp3';
+    audioElementRef.current.play();
+    runWorkFlow();
+  }
+
   function ChatMessage({ role, content, index }) {
 
     const pairIndex = Math.ceil(index / 2);
@@ -150,8 +181,8 @@ function App() {
           {/*!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Prompt {pairIndex}</button>)*/}
           {/*isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())} >Pause</button>)*/}
           {/*isPlaying || (isPaused && (<button style={{ marginTop: "10px" }} className="play-audio-button" onClick={() => (resumeAudio())}  >Resume</button>))*/}
-          {!isPlaying && (<MdPlayCircleOutline style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content))} />)}
-          {isPlaying && (<MdOutlinePauseCircleOutline style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
+          {!isPlaying && (<MdPlayCircleOutline role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content))} />)}
+          {isPlaying && (<MdOutlinePauseCircleOutline role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
           {/*isPlaying || (isPaused && <MdPlayCircleOutline style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (resumeAudio())} />)*/}
           {isPlaying || (isPaused && <div role='button' className='resume-button' onClick={() => (resumeAudio())}>
             <MdOutlinePanoramaFishEye className='circle-icon'/>
@@ -220,6 +251,23 @@ function App() {
     }
   }
 
+/*  async function inputSpeechFunction() {
+    //This function only exists because I am not able to input any stuff as speech in the library!
+    let generatedPrompt = "This is a sample input, reply with a story. Use about one short sentence."
+    let userChatUpdate = await updateChat({ role: "user", content: generatedPrompt });
+    console.log("This is the updated chat after the prompt of the user:", userChatUpdate);
+
+
+    const response = await sendChatGptRequest(userChatUpdate);
+
+    let aiChatUpdate = await updateChat({ role: "assistant", content: response });
+    console.log("This is the updated chat after the reply of chatGPT:", aiChatUpdate);
+
+    //requestGotSent = true;
+    //console.log(requestGotSent);
+    textToSpeech(response);
+  }
+*/
 
 
 
@@ -227,13 +275,26 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Welcome to the ChatGPT Voice Assistant</h1>
-        {/*<div>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</div>*/}
-        <h2 className='instruction-header'>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</h2>
+        {/*!audioEnabled && <h2>Please press the button below and allow microphone access when prompted.</h2>*/}
+        {audioEnabled && <h2 className='instruction-header'>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</h2>}
+        {/*!audioEnabled && <button onClick={toggleAudio}>
+          {audioEnabled ? 'Disable Audio' : 'Enable Audio'}
+  </button>*/}
       </header>
+      {!audioEnabled && <div className='App-body'>
+      <h2>Please press the button below and allow microphone access when prompted.</h2>
+      <button style={{ color: "black", width: "100%", maxWidth: '20rem', height: "5vh", backgroundColor: "white", border: "2px solid white", boxShadow: "none", margin: '20px', boxShadow: 'inset 0px 0px 0px 2px black'}}
+      onClick={toggleAudio}>
+          Start Application
+        </button>
+        </div>}
+      {audioEnabled &&
       <div className='App-body'>
+        {/*<button style={{ width: '20rem', height: '10rem', backgroundColor: 'red' }} onClick={inputSpeechFunction}></button>*/}
         <button
           style={{ color: "white", width: "100%", maxWidth: '20rem', height: "5vh", backgroundColor: "#F05039", border: "2px solid white", boxShadow: "none", margin: '20px' }}
-          onClick={runWorkFlow}
+          
+          onClick={handleClick}
           disabled={isPlaying || isRecording}
           ref={speakInPromptBtnRef}
         >
@@ -263,7 +324,7 @@ function App() {
             ))}
           </div>
         </div>
-      </div>
+      </div>}
       <footer className='App-footer'>
         <p>Current Version: {packagejson.version}</p>
       </footer>

@@ -115,12 +115,17 @@ if there is already a speech output happening. This was done by using the onAudi
     - Included chat bubbles for the user and GPT and gave it a "chat-like" feel
     - Support even better response for mobile view
 
-## [4.1.9] - 2023-17-09
-### Changed
-- Introduced some major design changes:
-    - Included chat bubbles for the user and GPT and gave it a "chat-like" feel
-    - Support even better response for mobile view
-
 ## [4.2.0] - 2023-17-09
 ### Added
 - Replaced the buttons with icons
+
+## [5.0.0] - 2023-18-09
+### Changed
+- Answers now also get automatically played on mobile.
+(This got achieved by including the playing of a silent audio file. It gets played directly each time the "Speak in your prompt" button gets pressed.)
+(During testing this worked 99% of the time, rarely the text did not get played automatically. I suspect this has something to do with no implementation of a "OnTouch" method.
+TODO: Further inspect this for later.)
+- Added a welcoming screen with a button. Upon pressing the access for the microphone gets requested to enhance the user experience.
+TODO: What happens if the user says no with the microphone?? Handle this case as well!!
+If the user grants access all the other elements also get rendered.
+TODO: Precisely test this with VoiceOver!!
