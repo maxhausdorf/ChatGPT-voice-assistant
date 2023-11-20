@@ -91,35 +91,35 @@ if there is already a speech output happening. This was done by using the onAudi
 ### Changed
 - Started adapting the header structure
 
-## [4.1.5] - 2023-13-09
+## [4.1.5] - 2023-11-13
 ### Changed
 - Bugfix: Numbering of prompts and answers was wrong
 
-## [4.1.6] - 2023-13-09
+## [4.1.6] - 2023-11-13
 ### Changed
 - Autoplay: for testing purposes this version will include autoplay after answer generation. Will restore if this feature does not work during testing.
 
-## [4.1.7] - 2023-15-09
+## [4.1.7] - 2023-11-15
 ### Changed
 - Bugfix: During a recording the "Speak in prompt" button now gets disabled.
 
-## [4.1.8] - 2023-17-09
+## [4.1.8] - 2023-11-17
 ### Added
 - A focused element now has a blue border.
 ### Changed
 - After a prompt has been read, the focus automatically switches to the "Speak in your prompt" button.
 
-## [4.1.9] - 2023-17-09
+## [4.1.9] - 2023-11-17
 ### Changed
 - Introduced some major design changes:
     - Included chat bubbles for the user and GPT and gave it a "chat-like" feel
     - Support even better response for mobile view
 
-## [4.2.0] - 2023-17-09
+## [4.2.0] - 2023-11-17
 ### Added
 - Replaced the buttons with icons
 
-## [5.0.0] - 2023-18-09
+## [5.0.0] - 2023-11-18
 ### Changed
 - Answers now also get automatically played on mobile.
 (This got achieved by including the playing of a silent audio file. It gets played directly each time the "Speak in your prompt" button gets pressed.)
@@ -129,3 +129,10 @@ TODO: Further inspect this for later.)
 TODO: What happens if the user says no with the microphone?? Handle this case as well!!
 If the user grants access all the other elements also get rendered.
 TODO: Precisely test this with VoiceOver!!
+
+
+## [5.0.1] - 2023-11-20
+### Added
+- During a recording of a prompt, a microphone in the top right corner gets displayed
+### Changed
+- Resolved an error in the changelog

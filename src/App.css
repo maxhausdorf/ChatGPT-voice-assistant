@@ -35,6 +35,7 @@ h1 {
 
 h2 {
   font-size: 16px;
+  margin: 16px;
 }
 
 h3 {
@@ -202,4 +203,45 @@ p {
   top: 50%;
   left: 37%;
   transform: translate(-50%, -50%) rotate(90deg) scaleX(0.63) scaleY(0.9);
+}
+
+.microphone-icon {
+  position: absolute;
+  font-size: 35px;
+  top: 17%;
+  left: 15.5%;
+  color: white;
+}
+
+.recording-sign {
+  position: absolute;
+  background-color: red;
+  border-radius: 100px;
+  width: 50px;
+  height: 50px;
+  font-size: 10px;
+  position: absolute;
+  top: 2%;
+  right: 1%;
+  animation: pulsate 2s ease-in-out infinite;
+}
+
+/* Mobile View */
+@media (max-width: 630px) {
+  .recording-sign {
+    top: 2.5%;
+    right: 3%;
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 1;
+  }
 }

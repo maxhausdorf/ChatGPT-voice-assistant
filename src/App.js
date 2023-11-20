@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { OpenAIClient } from '@azure/openai';
 import { AzureKeyCredential } from '@azure/openai';
 import packagejson from '../package.json';
-import { MdPlayCircleOutline, MdOutlinePauseCircleOutline, MdOutlinePanoramaFishEye, MdPlayArrow, MdRemove } from "react-icons/md";
+import { MdPlayCircleOutline, MdOutlinePauseCircleOutline, MdOutlinePanoramaFishEye, MdPlayArrow, MdRemove, MdMicNone } from "react-icons/md";
 
 
 
@@ -38,10 +38,10 @@ function App() {
       audioElementRef.current.play();
     }
     setAudioEnabled(!audioEnabled);
-    enableMicrophone();
+    enableMicrophone(); //this needs to get awaited and if the promise is not resolved properly then audio should not get set to enabled (if the user denied access)
   }
 
-  //This function request access for the microphone from the user. Somehow this results in a decrease of the volume. TODO: investigate this and resolve this.
+  //This function requests access for the microphone from the user. Somehow this results in a decrease of the volume. TODO: investigate this and resolve this.
   async function enableMicrophone() {
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -273,6 +273,7 @@ function App() {
 
   return (
     <div className="App">
+        {isRecording && (<div className='recording-sign' aria-hidden='true'><MdMicNone className='microphone-icon'/></div>)}
       <header className="App-header">
         <h1>Welcome to the ChatGPT Voice Assistant</h1>
         {/*!audioEnabled && <h2>Please press the button below and allow microphone access when prompted.</h2>*/}
@@ -328,7 +329,6 @@ function App() {
       <footer className='App-footer'>
         <p>Current Version: {packagejson.version}</p>
       </footer>
-
     </div>
   );
 }
