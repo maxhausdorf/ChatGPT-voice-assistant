@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/ChatGPT-voice-assistant/static/css/main.a2193138.css",
-    "main.js": "/ChatGPT-voice-assistant/static/js/main.f88587cd.js",
+    "main.js": "/ChatGPT-voice-assistant/static/js/main.4b54c2c3.js",
     "static/js/787.1c860e1a.chunk.js": "/ChatGPT-voice-assistant/static/js/787.1c860e1a.chunk.js",
     "index.html": "/ChatGPT-voice-assistant/index.html",
     "static/media/speech-processor.js": "/ChatGPT-voice-assistant/static/media/speech-processor.ce2b5f9ff72b7744205f.js",
     "main.a2193138.css.map": "/ChatGPT-voice-assistant/static/css/main.a2193138.css.map",
-    "main.f88587cd.js.map": "/ChatGPT-voice-assistant/static/js/main.f88587cd.js.map",
+    "main.4b54c2c3.js.map": "/ChatGPT-voice-assistant/static/js/main.4b54c2c3.js.map",
     "787.1c860e1a.chunk.js.map": "/ChatGPT-voice-assistant/static/js/787.1c860e1a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a2193138.css",
-    "static/js/main.f88587cd.js"
+    "static/js/main.4b54c2c3.js"
   ]
 }
