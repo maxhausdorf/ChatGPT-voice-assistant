@@ -141,3 +141,7 @@ TODO: Precisely test this with VoiceOver!!
 ### Added
 - Chat history: There is now a main menu button. In the main menu there is the possibility to 1. create a new chat. 2. view old chats.
 When viewing an old chat all the past data gets displayed.
+
+## [6.0.1] - 2023-11-21
+### Changed
+- It is not the first button anymore which needs to get pressed in order to create a new chat. User should also wait for the response to speak.

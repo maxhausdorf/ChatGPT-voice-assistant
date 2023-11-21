@@ -346,7 +346,7 @@ function App() {
       {isRecording && (<div className='recording-sign' aria-hidden='true'><MdMicNone className='microphone-icon' /></div>)}
       <header className="App-header">
         <h1>Welcome to the ChatGPT Voice Assistant</h1>
-        {audioEnabled && !viewHistory && (<h2 className='instruction-header'>To create a prompt, press the first button below and start speaking. To hear the response, press the second button.</h2>)}
+        {audioEnabled && !viewHistory && (<h2 className='instruction-header'>To create a prompt, press the second button below and start speaking. Wait for the response to speak.</h2>)}
       </header>
       {inMainMenu && (
         <div className='App-body'>
