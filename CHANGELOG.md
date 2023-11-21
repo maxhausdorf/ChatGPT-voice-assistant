@@ -136,3 +136,8 @@ TODO: Precisely test this with VoiceOver!!
 - During a recording of a prompt, a microphone in the top right corner gets displayed
 ### Changed
 - Resolved an error in the changelog
+
+## [6.0.0] - 2023-11-21
+### Added
+- Chat history: There is now a main menu button. In the main menu there is the possibility to 1. create a new chat. 2. view old chats.
+When viewing an old chat all the past data gets displayed.

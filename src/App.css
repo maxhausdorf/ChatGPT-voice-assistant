@@ -53,6 +53,50 @@ p {
   margin-bottom: 2%;
 }
 
+.app-button {
+  width: 100%;
+  max-width: 20rem;
+  height: 5vh;
+  border: 2px solid white;
+  box-shadow: none;
+}
+
+.start-button {
+  color: black;
+  background-color: white;
+  margin: 20px;
+  box-shadow: inset 0px 0px 0px 2px black;
+}
+
+.speak-in-button {
+  color: white;
+  background-color: #F05039;
+  margin: 20px;
+}
+
+.play-response-button {
+  color: white;
+  background-color: #1F449C;
+}
+
+.view-history {
+  background-color: beige;
+  box-shadow: inset 0px 0px 0px 2px black;
+}
+
+.go-to-chat-button {
+  margin-top: 20px;
+  box-shadow: inset 0px 0px 0px 2px black;
+}
+
+.main-menu {
+  box-shadow: inset 0px 0px 0px 2px black;
+}
+
+.create-chat {
+  box-shadow: inset 0px 0px 0px 2px black;
+}
+
 .App-header {
   /*outline: solid blue 2px;*/
   background-color: #282c34;
@@ -93,6 +137,13 @@ p {
   color: white;
   margin: 0px;
   margin-top: 3%;
+}
+
+.chat-history {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
 }
 
 .chat {

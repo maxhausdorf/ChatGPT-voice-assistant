@@ -1,6 +1,6 @@
 {
   "name": "prototype_chatgpt_voice_assistant",
-  "version": "5.0.1",
+  "version": "6.0.0",
   "private": true,
   "homepage": "https://maxhausdorf.github.io/ChatGPT-voice-assistant/",
   "dependencies": {
