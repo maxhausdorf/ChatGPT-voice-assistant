@@ -150,3 +150,6 @@ When viewing an old chat all the past data gets displayed.
 ### Changed
 - The chat now has a scrollbar as soon as there are more than two prompts.
 
+## [6.1.0] - 2023-12-06
+### Changed
+- Changed the header structure by adding aria labels. Tested it with screen reader on google chrome.

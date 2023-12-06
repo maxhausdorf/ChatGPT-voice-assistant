@@ -177,20 +177,28 @@ function App() {
 
   function ChatMessage({ role, content, index }) {
 
+    const baseTabIndex = index * 6;
+    const tabIndex1 = baseTabIndex + 1;
+    const tabIndex2 = baseTabIndex + 2;
+    const tabIndex3 = baseTabIndex + 3;
+    const tabIndex4 = baseTabIndex + 4;
+    const tabIndex5 = baseTabIndex + 5;
+    const tabIndex6 = baseTabIndex + 6;
+    const titleWithWhitespace = content.slice(0,20); 
+    const title = titleWithWhitespace.trim();
+
     const pairIndex = Math.ceil(index / 2);
     if (role === "user") {
       return (
         <div className='chat-user'>
-          <h4>Prompt {pairIndex}</h4>
+          {/*  aria-label='chat message' tabIndex={tabIndex1}  */}
+          <h4 aria-label={'user message header: ' + title} tabIndex={tabIndex2}>Prompt {pairIndex} {title}</h4>
+          {/*<p aria-label='user message' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>
-            {/*!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Prompt {pairIndex}</button>)*/}
-            {/*isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())} >Pause</button>)*/}
-            {/*isPlaying || (isPaused && (<button style={{ marginTop: "10px" }} className="play-audio-button" onClick={() => (resumeAudio())}  >Resume</button>))*/}
-            {!isPlaying && (<MdPlayCircleOutline role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content))} />)}
-            {isPlaying && (<MdOutlinePauseCircleOutline role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
-            {/*isPlaying || (isPaused && <MdPlayCircleOutline style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (resumeAudio())} />)*/}
-            {isPlaying || (isPaused && <div role='button' className='resume-button' onClick={() => (resumeAudio())}>
+            {!isPlaying && (<MdPlayCircleOutline aria-label='Play Prompt Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content))} />)}
+            {isPlaying && (<MdOutlinePauseCircleOutline aria-label='Pause Prompt Audio' tabIndex={tabIndex5} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
+            {isPlaying || (isPaused && <div aria-label='Resume Prompt Audio' tabIndex={tabIndex6} role='button' className='resume-button' onClick={() => (resumeAudio())}>
               <MdOutlinePanoramaFishEye className='circle-icon' />
               <MdPlayArrow className='play-icon' />
               <MdRemove className='bar-icon' />
@@ -201,16 +209,14 @@ function App() {
     } else if (role === "assistant") {
       return (
         <div className='chat-ai'>
-          <h4>Answer {pairIndex}</h4>
+          {/*  aria-label='chat message' tabIndex={tabIndex1}  */}
+          <h4 aria-label={'assistant message header: ' + title} tabIndex={tabIndex2}>Answer {pairIndex} {title}</h4>
+          {/*<p aria-label='assistant response' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>
-            {/*!isPlaying && (<button className="play-audio-button" onClick={() => (textToSpeech(content))}>Play Answer {pairIndex}</button>)*/}
-            {/*isPlaying && (<button className="play-audio-button" onClick={() => (pauseAudio())}>Pause</button>)*/}
-            {/*isPlaying || (isPaused && (<button style={{ marginTop: "10px" }} className="play-audio-button" onClick={() => (resumeAudio())} >Resume</button>))*/}
-            {!isPlaying && (<MdPlayCircleOutline role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content))} />)}
-            {isPlaying && (<MdOutlinePauseCircleOutline role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
-            {/*isPlaying || (isPaused && <MdPlayCircleOutline role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (resumeAudio())} />)*/}
-            {isPlaying || (isPaused && <div role='button' className='resume-button' onClick={() => (resumeAudio())}>
+            {!isPlaying && (<MdPlayCircleOutline aria-label='Play Response Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content))} />)}
+            {isPlaying && (<MdOutlinePauseCircleOutline aria-label='Pause Response Audio' tabIndex={tabIndex5} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
+            {isPlaying || (isPaused && <div aria-label='Resume Response Audio' tabIndex={tabIndex6} role='button' className='resume-button' onClick={() => (resumeAudio())}>
               <MdOutlinePanoramaFishEye className='circle-icon' />
               <MdPlayArrow className='play-icon' />
               <MdRemove className='bar-icon' />
@@ -391,6 +397,7 @@ function App() {
           <button className='app-button main-menu'
             onClick={() => setInMainMenu(true)}
             disabled={isPlaying || isRecording}
+            tabIndex={1}
           >
             Go To Main Menu
           </button>
@@ -399,6 +406,7 @@ function App() {
             onClick={handleClick}
             disabled={isPlaying || isRecording}
             ref={speakInPromptBtnRef}
+            tabIndex={2}
           >
             Speak in your prompt
           </button>
@@ -406,6 +414,7 @@ function App() {
             className='app-button play-response-button'
             onClick={() => textToSpeech(responseData)}
             disabled={isPlaying}
+            tabIndex={2}
           >
             Play last ChatGPT response
           </button>
