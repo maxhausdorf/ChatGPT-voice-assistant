@@ -173,6 +173,8 @@ p {
   box-sizing: border-box;
   padding-left: 5%;
   padding-right: 5%;
+  max-height: 50vh;
+  overflow-y: auto;
 }
 
 .chat-user {
@@ -283,7 +285,12 @@ p {
     top: 2.5%;
     right: 3%;
   }
+  .content-chat {
+    max-height: 40vh;
+    overflow-y: auto;
+  }
 }
+
 
 @keyframes pulsate {
   0% {

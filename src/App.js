@@ -51,6 +51,7 @@ function App() {
     try {
       await navigator.mediaDevices.getUserMedia({ audio: true });
       //Inform the user that the microphone is ready
+
     } catch (error) {
       //Still TODO: Handle the error (user denied access etc.)
     }
@@ -291,7 +292,7 @@ function App() {
       const chatData = JSON.parse(localStorage.getItem('chatData')) || {};
 
       if (!titleCurrentChat) {
-        let test = [...aiChatUpdate, { role: "system", content: "Generate one title from the past chats. Do not use more than 45 characters in your answer. If this has been done already use the same title." }];
+        let test = [...aiChatUpdate, { role: "system", content: "Summarize the past chats by creating a title. Do not use more than 45 characters in your answer. If this has been done already use the same title." }];
         let titleForChat = await sendChatGptRequest(test);
         console.log("This is the title and only the title" + titleForChat);
 

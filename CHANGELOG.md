@@ -145,3 +145,8 @@ When viewing an old chat all the past data gets displayed.
 ## [6.0.1] - 2023-11-21
 ### Changed
 - It is not the first button anymore which needs to get pressed in order to create a new chat. User should also wait for the response to speak.
+
+## [6.0.2] - 2023-12-06
+### Changed
+- The chat now has a scrollbar as soon as there are more than two prompts.
+
