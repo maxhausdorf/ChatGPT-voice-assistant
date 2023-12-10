@@ -16,7 +16,7 @@ function App() {
   const [viewHistory, setViewHistory] = useState(false);
   const [titleCurrentChat, setTitleCurrentChat] = useState('');
   const [inMainMenu, setInMainMenu] = useState(false);
-
+  const [playingMessageIndex, setPlayingMessageIndex] = useState(null);
 
   async function sendChatGptRequest(chat) {
 
@@ -79,7 +79,7 @@ function App() {
           const errorMessage = 'ERROR: Speech was cancelled or could not be recognized. Ensure your microphone is working properly.';
           setResponseData(errorMessage); //this might solve one bug mentioned by orian. TODO: further investigate this!
           setLastPrompt(errorMessage);
-          textToSpeech(errorMessage);
+          textToSpeech(errorMessage, 0); //TODO: check if 0 is the correct index here. (Can we just leave it out even?)
           resolve(null);
         }
       });
@@ -112,10 +112,13 @@ function App() {
     setIsPaused(false);
   }
 
-  function textToSpeech(textToSpeak) {
+  function textToSpeech(textToSpeak, messageId) {
+    console.log("This is the index of the current message playing: " + playingMessageIndex);
+    console.log("This is the current chat: " + chat);
     myPlayer.onAudioStart = () => {
       setIsPaused(false);
       setIsPlaying(true);
+      setPlayingMessageIndex(messageId);
       //console.log("Set started playing right now!");
     }
 
@@ -196,9 +199,9 @@ function App() {
           {/*<p aria-label='user message' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>
-            {!isPlaying && (<MdPlayCircleOutline aria-label='Play Prompt Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content))} />)}
-            {isPlaying && (<MdOutlinePauseCircleOutline aria-label='Pause Prompt Audio' tabIndex={tabIndex5} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
-            {isPlaying || (isPaused && <div aria-label='Resume Prompt Audio' tabIndex={tabIndex6} role='button' className='resume-button' onClick={() => (resumeAudio())}>
+            {!isPlaying && (<MdPlayCircleOutline aria-label='Play Prompt Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} />)}
+            {(index === playingMessageIndex) && isPlaying && (<MdOutlinePauseCircleOutline aria-label='Pause Prompt Audio' tabIndex={tabIndex5} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
+            {(index === playingMessageIndex) && isPaused && (<div aria-label='Resume Prompt Audio' tabIndex={tabIndex6} role='button' className='resume-button' onClick={() => (resumeAudio())}>
               <MdOutlinePanoramaFishEye className='circle-icon' />
               <MdPlayArrow className='play-icon' />
               <MdRemove className='bar-icon' />
@@ -214,9 +217,9 @@ function App() {
           {/*<p aria-label='assistant response' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>
-            {!isPlaying && (<MdPlayCircleOutline aria-label='Play Response Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content))} />)}
-            {isPlaying && (<MdOutlinePauseCircleOutline aria-label='Pause Response Audio' tabIndex={tabIndex5} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
-            {isPlaying || (isPaused && <div aria-label='Resume Response Audio' tabIndex={tabIndex6} role='button' className='resume-button' onClick={() => (resumeAudio())}>
+            {!isPlaying && (<MdPlayCircleOutline aria-label='Play Response Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} />)}
+            {(index === playingMessageIndex) && isPlaying && (<MdOutlinePauseCircleOutline aria-label='Pause Response Audio' tabIndex={tabIndex5} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
+            {(index === playingMessageIndex) && isPaused && (<div aria-label='Resume Response Audio' tabIndex={tabIndex6} role='button' className='resume-button' onClick={() => (resumeAudio())}>
               <MdOutlinePanoramaFishEye className='circle-icon' />
               <MdPlayArrow className='play-icon' />
               <MdRemove className='bar-icon' />
@@ -287,7 +290,9 @@ function App() {
       let aiChatUpdate = await updateChat({ role: "assistant", content: response });
       console.log("This is the updated chat after the reply of chatGPT:", aiChatUpdate);
 
-      textToSpeech(response);
+      textToSpeech(response, aiChatUpdate.length - 1);
+      console.log("This is the current length of the chat: " + chat.length);
+      setPlayingMessageIndex(chat.length);
 
       //The next lines saves this interaction to the localStorage such that it can get retrieved later.
       //First I need to generate a title by doing another request to ChatGPT
@@ -410,14 +415,16 @@ function App() {
           >
             Speak in your prompt
           </button>
+          {/*
           <button
             className='app-button play-response-button'
-            onClick={() => textToSpeech(responseData)}
+            onClick={() => textToSpeech(responseData, chat.length - 1)}
             disabled={isPlaying}
             tabIndex={2}
           >
             Play last ChatGPT response
           </button>
+          */}
           <div className='chat'>
             <div className='header-chat'>
               <h3>Prompt:</h3>
