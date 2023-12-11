@@ -157,3 +157,7 @@ When viewing an old chat all the past data gets displayed.
 ## [6.2.0] - 2023-12-10
 ### Changed
 - The pause button and the resume button now only appear in the chat box of which the audio has been played.
+
+## [6.2.1] - 2023-12-11
+### Changed
+- Renamed the Go to Main menu button to "Menu Overview" button.

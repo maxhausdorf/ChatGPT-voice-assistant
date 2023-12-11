@@ -404,7 +404,7 @@ function App() {
             disabled={isPlaying || isRecording}
             tabIndex={1}
           >
-            Go To Main Menu
+            Menu Overview
           </button>
           <button
             className='app-button speak-in-button'
