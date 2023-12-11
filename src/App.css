@@ -59,6 +59,11 @@ p {
   height: 5vh;
   border: 2px solid white;
   box-shadow: none;
+  border-radius: 20px;
+}
+
+.app-button:disabled {
+  opacity: 0.5;
 }
 
 .start-button {
@@ -82,6 +87,7 @@ p {
 .view-history {
   background-color: beige;
   box-shadow: inset 0px 0px 0px 2px black;
+  margin-top: 20px;
 }
 
 .go-to-chat-button {

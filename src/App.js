@@ -16,6 +16,7 @@ function App() {
   const [viewHistory, setViewHistory] = useState(false);
   const [titleCurrentChat, setTitleCurrentChat] = useState('');
   const [inMainMenu, setInMainMenu] = useState(false);
+  const [isChatExpanded, setIsChatExpanded] = useState(null); // TO DO: if there is only one chat visible, no dropdown/summary is needed to display
   const [playingMessageIndex, setPlayingMessageIndex] = useState(null);
 
   async function sendChatGptRequest(chat) {
@@ -72,7 +73,7 @@ function App() {
 
       recognizer.recognizeOnceAsync(result => {
         if (result.reason === sdk.ResultReason.RecognizedSpeech) {
-          console.log(`RECOGNIZED PROMPT: Text=${result.text}`)
+          //console.log(`RECOGNIZED PROMPT: Text=${result.text}`)
           setLastPrompt(result.text);
           resolve(result.text);
         } else {
@@ -113,8 +114,8 @@ function App() {
   }
 
   function textToSpeech(textToSpeak, messageId) {
-    console.log("This is the index of the current message playing: " + playingMessageIndex);
-    console.log("This is the current chat: " + chat);
+    //console.log("This is the index of the current message playing: " + messageId);
+    //console.log("This is the current chat: " + chat);
     myPlayer.onAudioStart = () => {
       setIsPaused(false);
       setIsPlaying(true);
@@ -178,7 +179,14 @@ function App() {
     runWorkFlow();
   }
 
+  function toggleChatExpansion() {
+    setIsChatExpanded(prev => !prev);
+    speakInPromptBtnRef.current.focus();
+  }
+
   function ChatMessage({ role, content, index }) {
+
+    if (!isChatExpanded && index < chat.length - 2) { return null; }
 
     const baseTabIndex = index * 6;
     const tabIndex1 = baseTabIndex + 1;
@@ -187,7 +195,7 @@ function App() {
     const tabIndex4 = baseTabIndex + 4;
     const tabIndex5 = baseTabIndex + 5;
     const tabIndex6 = baseTabIndex + 6;
-    const titleWithWhitespace = content.slice(0,20); 
+    const titleWithWhitespace = content.slice(0, 20);
     const title = titleWithWhitespace.trim();
 
     const pairIndex = Math.ceil(index / 2);
@@ -206,6 +214,7 @@ function App() {
               <MdPlayArrow className='play-icon' />
               <MdRemove className='bar-icon' />
             </div>)}
+            <MdPlayCircleOutline style={{ marginTop: "10px", fontSize: '40px', color: 'black', opacity: '0.0' }} /> {/* This element is only here to keep the container from collapsing */}
           </div>
         </div>
       )
@@ -217,6 +226,7 @@ function App() {
           {/*<p aria-label='assistant response' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>
+            <MdPlayCircleOutline style={{ marginTop: "10px", fontSize: '40px', color: 'white', opacity: '0.0' }} /> {/* This element is only here to keep the container from collapsing */}
             {!isPlaying && (<MdPlayCircleOutline aria-label='Play Response Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} />)}
             {(index === playingMessageIndex) && isPlaying && (<MdOutlinePauseCircleOutline aria-label='Pause Response Audio' tabIndex={tabIndex5} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
             {(index === playingMessageIndex) && isPaused && (<div aria-label='Resume Response Audio' tabIndex={tabIndex6} role='button' className='resume-button' onClick={() => (resumeAudio())}>
@@ -233,7 +243,7 @@ function App() {
 
   function ChatList() {
     const chatData = localStorage.getItem('chatData');
-    if (!chatData) {return (<div className='chat-history'></div>)}
+    if (!chatData) { return (<div className='chat-history'></div>) } //this fixed a bug when displaying the past chats without any chats existing
     const chatObject = JSON.parse(chatData);
     const chatNames = Object.keys(chatObject);
     console.log('These are all the chat names!');
@@ -283,16 +293,15 @@ function App() {
     if (generatedPrompt) {
 
       let userChatUpdate = await updateChat({ role: "user", content: generatedPrompt });
-      console.log("This is the updated chat after the prompt of the user:", userChatUpdate);
+      //console.log("This is the updated chat after the prompt of the user:", userChatUpdate);
 
 
       const response = await sendChatGptRequest(userChatUpdate);
 
       let aiChatUpdate = await updateChat({ role: "assistant", content: response });
-      console.log("This is the updated chat after the reply of chatGPT:", aiChatUpdate);
+      //console.log("This is the updated chat after the reply of chatGPT:", aiChatUpdate);
 
       textToSpeech(response, aiChatUpdate.length - 1);
-      console.log("This is the current length of the chat: " + chat.length);
       setPlayingMessageIndex(chat.length);
 
       //The next lines saves this interaction to the localStorage such that it can get retrieved later.
@@ -306,7 +315,7 @@ function App() {
       if (!titleCurrentChat) {
         let test = [...aiChatUpdate, { role: "system", content: "Summarize the past chats by creating a title. Do not use more than 45 characters in your answer. If this has been done already use the same title." }];
         let titleForChat = await sendChatGptRequest(test);
-        console.log("This is the title and only the title" + titleForChat);
+        console.log("This is the title and only the title: " + titleForChat);
 
         chatData[titleForChat] = [newUserMessage, newAssistantMessage];
         setTitleCurrentChat(titleForChat);
@@ -359,6 +368,7 @@ function App() {
       {isRecording && (<div className='recording-sign' aria-hidden='true'><MdMicNone className='microphone-icon' /></div>)}
       <header className="App-header">
         <h1>Welcome to the ChatGPT Voice Assistant</h1>
+        {/*<button style={{ height: "50px", width: "50px", backgroundColor: "red" }} onClick={inputSpeechFunction}></button>*/}
         {audioEnabled && !viewHistory && (<h2 className='instruction-header'>To create a prompt, press the second button below and start speaking. Wait for the response to speak.</h2>)}
       </header>
       {inMainMenu && (
@@ -426,6 +436,10 @@ function App() {
             Play last ChatGPT response
           </button>
           */}
+          <button disabled={chat.length < 4} className='app-button play-response-button' onClick={toggleChatExpansion} aria-label={isChatExpanded ? "Collapse Chat" : "Expand Chat"} tabIndex={3}>
+            {isChatExpanded ? "Collapse Chat" : "Expand Chat"}
+          </button>
+          {/* Check if it is good to place the button here */}
           <div className='chat'>
             <div className='header-chat'>
               <h3>Prompt:</h3>

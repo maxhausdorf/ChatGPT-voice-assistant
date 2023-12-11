@@ -164,4 +164,13 @@ When viewing an old chat all the past data gets displayed.
 
 ## [6.2.2] - 2023-12-11
 ### Fixed
-- If there were no past chats and the chat overview got clicked everything broke. 
+- If there were no past chats and the chat overview got clicked everything broke.
+
+## [6.3.0] - 2023-12-11
+### Changed
+- Included the "Expand Chat" button. If there are multiple chat interactions, only the two most recent chats get displayed.
+If the button gets pressed, the whole chat history gets displayed.
+### Changed
+- Placed dummy buttons with 0.0 transparency to keep the chat containers from collapsing.
+### Changed
+- Removed (commented it out) the "Play last ChatGPT response" button
