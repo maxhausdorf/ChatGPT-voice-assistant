@@ -161,3 +161,7 @@ When viewing an old chat all the past data gets displayed.
 ## [6.2.1] - 2023-12-11
 ### Changed
 - Renamed the Go to Main menu button to "Menu Overview" button.
+
+## [6.2.2] - 2023-12-11
+### Fixed
+- If there were no past chats and the chat overview got clicked everything broke. 

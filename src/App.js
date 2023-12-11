@@ -233,6 +233,7 @@ function App() {
 
   function ChatList() {
     const chatData = localStorage.getItem('chatData');
+    if (!chatData) {return (<div className='chat-history'></div>)}
     const chatObject = JSON.parse(chatData);
     const chatNames = Object.keys(chatObject);
     console.log('These are all the chat names!');
