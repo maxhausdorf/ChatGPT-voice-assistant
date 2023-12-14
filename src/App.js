@@ -184,7 +184,20 @@ function App() {
     speakInPromptBtnRef.current.focus();
   }
 
-  function ChatMessage({ role, content, index }) {
+  function ChatMessage({ role, content, index, isPlaying }) {
+
+    const pauseButtonRef = useRef(null);
+
+    useEffect(() => {
+      if (isPlaying) {
+        //console.log(pauseButtonRef);
+
+        //console.log("The button right before the focus: "+ pauseButtonRef.current);
+        if (pauseButtonRef.current) {
+          pauseButtonRef.current.focus();
+        }
+      }
+    }, [index, playingMessageIndex, isPlaying]);
 
     if (!isChatExpanded && index < chat.length - 2) { return null; }
 
@@ -207,14 +220,25 @@ function App() {
           {/*<p aria-label='user message' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>
-            {!isPlaying && (<MdPlayCircleOutline aria-label='Play Prompt Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} />)}
-            {(index === playingMessageIndex) && isPlaying && (<MdOutlinePauseCircleOutline aria-label='Pause Prompt Audio' tabIndex={tabIndex5} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
-            {(index === playingMessageIndex) && isPaused && (<div aria-label='Resume Prompt Audio' tabIndex={tabIndex6} role='button' className='resume-button' onClick={() => (resumeAudio())}>
+            {!isPlaying && (<button className='audio-control-button-user' aria-label='Play Prompt Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} ><MdPlayCircleOutline /></button>)}
+            {(index === playingMessageIndex) && isPlaying &&
+              (<button className='audio-control-button-user'
+                aria-label='Pause Prompt Audio'
+                tabIndex={tabIndex5}
+                role='button'
+                style={{ marginTop: "10px", fontSize: '40px' }}
+                onClick={() => (pauseAudio())}
+                ref={pauseButtonRef}
+              >
+                <MdOutlinePauseCircleOutline />
+              </button>
+              )}
+            {(index === playingMessageIndex) && isPaused && (<button className='resume-button-user' aria-label='Resume Prompt Audio' tabIndex={tabIndex6} role='button' onClick={() => (resumeAudio())}>
               <MdOutlinePanoramaFishEye className='circle-icon' />
               <MdPlayArrow className='play-icon' />
               <MdRemove className='bar-icon' />
-            </div>)}
-            <MdPlayCircleOutline style={{ marginTop: "10px", fontSize: '40px', color: 'black', opacity: '0.0' }} /> {/* This element is only here to keep the container from collapsing */}
+            </button>)}
+            <button className='audio-control-button-user' style={{ marginTop: "10px", fontSize: '40px', color: 'black', opacity: '0.0' }} ><MdPlayCircleOutline /></button> {/* This element is only here to keep the container from collapsing */}
           </div>
         </div>
       )
@@ -226,20 +250,54 @@ function App() {
           {/*<p aria-label='assistant response' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>
-            <MdPlayCircleOutline style={{ marginTop: "10px", fontSize: '40px', color: 'white', opacity: '0.0' }} /> {/* This element is only here to keep the container from collapsing */}
-            {!isPlaying && (<MdPlayCircleOutline aria-label='Play Response Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} />)}
-            {(index === playingMessageIndex) && isPlaying && (<MdOutlinePauseCircleOutline aria-label='Pause Response Audio' tabIndex={tabIndex5} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
-            {(index === playingMessageIndex) && isPaused && (<div aria-label='Resume Response Audio' tabIndex={tabIndex6} role='button' className='resume-button' onClick={() => (resumeAudio())}>
+            <button className='audio-control-button-ai' style={{ marginTop: "10px", fontSize: '40px', color: 'white', opacity: '0.0' }} ><MdPlayCircleOutline /></button> {/* This element is only here to keep the container from collapsing */}
+            {!isPlaying && (<button className='audio-control-button-ai' aria-label='Play Response Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} ><MdPlayCircleOutline /></button>)}
+            {(index === playingMessageIndex) && isPlaying &&
+              (<button className='audio-control-button-ai'
+                aria-label='Pause Response Audio'
+                tabIndex={tabIndex5}
+                role='button'
+                style={{ marginTop: "10px", fontSize: '40px' }}
+                onClick={() => (pauseAudio())}
+                ref={pauseButtonRef}
+              >
+                <MdOutlinePauseCircleOutline />
+              </button>)}
+            {(index === playingMessageIndex) && isPaused && (<button className='resume-button-ai' aria-label='Resume Response Audio' tabIndex={tabIndex6} role='button' onClick={() => (resumeAudio())}>
               <MdOutlinePanoramaFishEye className='circle-icon' />
               <MdPlayArrow className='play-icon' />
               <MdRemove className='bar-icon' />
-            </div>)}
+            </button>)}
           </div>
         </div>
       )
     }
   }
 
+  function toggleAudioPlayback() {
+    if (isPlaying) {
+      pauseAudio();
+    } else if (isPaused) {
+      resumeAudio();
+    } else if (!isPaused && !isPlaying) {
+      // textToSpeech(chat[chat.length].content);
+
+    }
+  }
+  /*
+    useEffect(() => {
+      if (chat.length > 1) {
+        console.log(chat.length);
+        const handleKeyDown = (event) => {
+          if (event.code === "Space") {
+            event.preventDefault();
+            toggleAudioPlayback();
+          }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+      }
+    }, [isPlaying, chat.length]);
+  */
 
   function ChatList() {
     const chatData = localStorage.getItem('chatData');
@@ -447,7 +505,7 @@ function App() {
             </div>
             <div className='content-chat'>
               {chat.map((message, index) => (
-                <ChatMessage index={index} key={index} role={message.role} content={message.content} />
+                <ChatMessage index={index} key={index} role={message.role} content={message.content} playingMessageIndex={playingMessageIndex} isPlaying={isPlaying} />
               ))}
             </div>
           </div>

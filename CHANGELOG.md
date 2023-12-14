@@ -174,3 +174,7 @@ If the button gets pressed, the whole chat history gets displayed.
 - Placed dummy buttons with 0.0 transparency to keep the chat containers from collapsing.
 ### Changed
 - Removed (commented it out) the "Play last ChatGPT response" button
+
+## [6.4.0] - 2023-12-14
+### Changed
+- Pause button of message now gets auto focused after speech begins. Also started with the spacebar control (does not fully work yet).
