@@ -178,3 +178,7 @@ If the button gets pressed, the whole chat history gets displayed.
 ## [6.4.0] - 2023-12-14
 ### Changed
 - Pause button of message now gets auto focused after speech begins. Also started with the spacebar control (does not fully work yet).
+
+## [6.5.0] - 2023-12-17
+### Changed
+- After pausing the audio output the resume button gets focused now instead of the Speak in your prompt button."

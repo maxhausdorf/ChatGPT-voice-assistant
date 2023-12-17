@@ -158,7 +158,7 @@ function App() {
   const speakInPromptBtnRef = useRef(null);
 
   useEffect(() => {
-    if (!isPlaying && audioEnabled) {
+    if (!isPlaying && audioEnabled && !isPaused) {
       speakInPromptBtnRef.current.focus();
     }
   }, [isPlaying]);
@@ -184,20 +184,26 @@ function App() {
     speakInPromptBtnRef.current.focus();
   }
 
-  function ChatMessage({ role, content, index, isPlaying }) {
+  function ChatMessage({ role, content, index, isPlaying, isPaused }) {
 
     const pauseButtonRef = useRef(null);
+    const resumeButtonRef = useRef(null);
 
     useEffect(() => {
       if (isPlaying) {
-        //console.log(pauseButtonRef);
-
-        //console.log("The button right before the focus: "+ pauseButtonRef.current);
         if (pauseButtonRef.current) {
           pauseButtonRef.current.focus();
         }
       }
-    }, [index, playingMessageIndex, isPlaying]);
+    }, [index, playingMessageIndex, isPlaying, isPaused]);
+
+    useEffect(() => {
+      if (isPaused) {
+        if (resumeButtonRef.current) {
+          resumeButtonRef.current.focus();
+        }
+      }
+    }, [index, playingMessageIndex, isPlaying, isPaused])
 
     if (!isChatExpanded && index < chat.length - 2) { return null; }
 
@@ -233,7 +239,7 @@ function App() {
                 <MdOutlinePauseCircleOutline />
               </button>
               )}
-            {(index === playingMessageIndex) && isPaused && (<button className='resume-button-user' aria-label='Resume Prompt Audio' tabIndex={tabIndex6} role='button' onClick={() => (resumeAudio())}>
+            {(index === playingMessageIndex) && isPaused && (<button className='resume-button-user' aria-label='Resume Prompt Audio' tabIndex={tabIndex6} role='button' onClick={() => (resumeAudio())} ref={resumeButtonRef}>
               <MdOutlinePanoramaFishEye className='circle-icon' />
               <MdPlayArrow className='play-icon' />
               <MdRemove className='bar-icon' />
@@ -263,7 +269,7 @@ function App() {
               >
                 <MdOutlinePauseCircleOutline />
               </button>)}
-            {(index === playingMessageIndex) && isPaused && (<button className='resume-button-ai' aria-label='Resume Response Audio' tabIndex={tabIndex6} role='button' onClick={() => (resumeAudio())}>
+            {(index === playingMessageIndex) && isPaused && (<button className='resume-button-ai' aria-label='Resume Response Audio' tabIndex={tabIndex6} role='button' onClick={() => (resumeAudio())} ref={resumeButtonRef}>
               <MdOutlinePanoramaFishEye className='circle-icon' />
               <MdPlayArrow className='play-icon' />
               <MdRemove className='bar-icon' />
@@ -505,7 +511,7 @@ function App() {
             </div>
             <div className='content-chat'>
               {chat.map((message, index) => (
-                <ChatMessage index={index} key={index} role={message.role} content={message.content} playingMessageIndex={playingMessageIndex} isPlaying={isPlaying} />
+                <ChatMessage index={index} key={index} role={message.role} content={message.content} playingMessageIndex={playingMessageIndex} isPlaying={isPlaying} isPaused={isPaused}/>
               ))}
             </div>
           </div>
