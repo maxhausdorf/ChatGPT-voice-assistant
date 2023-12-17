@@ -99,6 +99,22 @@ p {
   margin: 20px;
 }
 
+.audio-control-button-user {
+  background-color: white;
+  display: flex;
+  box-shadow: none;
+  border: none;
+}
+
+
+.audio-control-button-ai {
+  background-color: black;
+  display: flex;
+  box-shadow: none;
+  border: none;
+  color: white;
+}
+
 .play-response-button {
   color: white;
   background-color: #1F449C;
@@ -269,12 +285,25 @@ p {
 
 }
 
-.resume-button {
+.resume-button-user {
   display: flex;
   box-sizing: border-box;
   position: relative;
   font-size: 40px;
   margin-top: 10px;
+  background-color: white;
+  border: none;
+}
+
+.resume-button-ai {
+  display: flex;
+  box-sizing: border-box;
+  position: relative;
+  font-size: 40px;
+  margin-top: 10px;
+  background-color: black;
+  border: none;
+  color: white;
 }
 
 .circle-icon {

@@ -158,7 +158,7 @@ function App() {
   const speakInPromptBtnRef = useRef(null);
 
   useEffect(() => {
-    if (!isPlaying && audioEnabled) {
+    if (!isPlaying && audioEnabled && !isPaused) {
       speakInPromptBtnRef.current.focus();
     }
   }, [isPlaying]);
@@ -184,7 +184,26 @@ function App() {
     speakInPromptBtnRef.current.focus();
   }
 
-  function ChatMessage({ role, content, index }) {
+  function ChatMessage({ role, content, index, isPlaying, isPaused }) {
+
+    const pauseButtonRef = useRef(null);
+    const resumeButtonRef = useRef(null);
+
+    useEffect(() => {
+      if (isPlaying) {
+        if (pauseButtonRef.current) {
+          pauseButtonRef.current.focus();
+        }
+      }
+    }, [index, playingMessageIndex, isPlaying, isPaused]);
+
+    useEffect(() => {
+      if (isPaused) {
+        if (resumeButtonRef.current) {
+          resumeButtonRef.current.focus();
+        }
+      }
+    }, [index, playingMessageIndex, isPlaying, isPaused])
 
     if (!isChatExpanded && index < chat.length - 2) { return null; }
 
@@ -207,14 +226,25 @@ function App() {
           {/*<p aria-label='user message' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>
-            {!isPlaying && (<MdPlayCircleOutline aria-label='Play Prompt Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} />)}
-            {(index === playingMessageIndex) && isPlaying && (<MdOutlinePauseCircleOutline aria-label='Pause Prompt Audio' tabIndex={tabIndex5} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
-            {(index === playingMessageIndex) && isPaused && (<div aria-label='Resume Prompt Audio' tabIndex={tabIndex6} role='button' className='resume-button' onClick={() => (resumeAudio())}>
+            {!isPlaying && (<button className='audio-control-button-user' aria-label='Play Prompt Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} ><MdPlayCircleOutline /></button>)}
+            {(index === playingMessageIndex) && isPlaying &&
+              (<button className='audio-control-button-user'
+                aria-label='Pause Prompt Audio'
+                tabIndex={tabIndex5}
+                role='button'
+                style={{ marginTop: "10px", fontSize: '40px' }}
+                onClick={() => (pauseAudio())}
+                ref={pauseButtonRef}
+              >
+                <MdOutlinePauseCircleOutline />
+              </button>
+              )}
+            {(index === playingMessageIndex) && isPaused && (<button className='resume-button-user' aria-label='Resume Prompt Audio' tabIndex={tabIndex6} role='button' onClick={() => (resumeAudio())} ref={resumeButtonRef}>
               <MdOutlinePanoramaFishEye className='circle-icon' />
               <MdPlayArrow className='play-icon' />
               <MdRemove className='bar-icon' />
-            </div>)}
-            <MdPlayCircleOutline style={{ marginTop: "10px", fontSize: '40px', color: 'black', opacity: '0.0' }} /> {/* This element is only here to keep the container from collapsing */}
+            </button>)}
+            <button className='audio-control-button-user' style={{ marginTop: "10px", fontSize: '40px', color: 'black', opacity: '0.0' }} ><MdPlayCircleOutline /></button> {/* This element is only here to keep the container from collapsing */}
           </div>
         </div>
       )
@@ -226,20 +256,54 @@ function App() {
           {/*<p aria-label='assistant response' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>
-            <MdPlayCircleOutline style={{ marginTop: "10px", fontSize: '40px', color: 'white', opacity: '0.0' }} /> {/* This element is only here to keep the container from collapsing */}
-            {!isPlaying && (<MdPlayCircleOutline aria-label='Play Response Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} />)}
-            {(index === playingMessageIndex) && isPlaying && (<MdOutlinePauseCircleOutline aria-label='Pause Response Audio' tabIndex={tabIndex5} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (pauseAudio())} />)}
-            {(index === playingMessageIndex) && isPaused && (<div aria-label='Resume Response Audio' tabIndex={tabIndex6} role='button' className='resume-button' onClick={() => (resumeAudio())}>
+            <button className='audio-control-button-ai' style={{ marginTop: "10px", fontSize: '40px', color: 'white', opacity: '0.0' }} ><MdPlayCircleOutline /></button> {/* This element is only here to keep the container from collapsing */}
+            {!isPlaying && (<button className='audio-control-button-ai' aria-label='Play Response Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} ><MdPlayCircleOutline /></button>)}
+            {(index === playingMessageIndex) && isPlaying &&
+              (<button className='audio-control-button-ai'
+                aria-label='Pause Response Audio'
+                tabIndex={tabIndex5}
+                role='button'
+                style={{ marginTop: "10px", fontSize: '40px' }}
+                onClick={() => (pauseAudio())}
+                ref={pauseButtonRef}
+              >
+                <MdOutlinePauseCircleOutline />
+              </button>)}
+            {(index === playingMessageIndex) && isPaused && (<button className='resume-button-ai' aria-label='Resume Response Audio' tabIndex={tabIndex6} role='button' onClick={() => (resumeAudio())} ref={resumeButtonRef}>
               <MdOutlinePanoramaFishEye className='circle-icon' />
               <MdPlayArrow className='play-icon' />
               <MdRemove className='bar-icon' />
-            </div>)}
+            </button>)}
           </div>
         </div>
       )
     }
   }
 
+  function toggleAudioPlayback() {
+    if (isPlaying) {
+      pauseAudio();
+    } else if (isPaused) {
+      resumeAudio();
+    } else if (!isPaused && !isPlaying) {
+      // textToSpeech(chat[chat.length].content);
+
+    }
+  }
+  /*
+    useEffect(() => {
+      if (chat.length > 1) {
+        console.log(chat.length);
+        const handleKeyDown = (event) => {
+          if (event.code === "Space") {
+            event.preventDefault();
+            toggleAudioPlayback();
+          }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+      }
+    }, [isPlaying, chat.length]);
+  */
 
   function ChatList() {
     const chatData = localStorage.getItem('chatData');
@@ -446,26 +510,25 @@ function App() {
             Play last ChatGPT response
           </button>
           */}
-            <button disabled={chat.length < 4} className='app-button play-response-button' onClick={toggleChatExpansion} aria-label={isChatExpanded ? "Collapse Chat" : "Expand Chat"} tabIndex={3}>
-              {isChatExpanded ? "Collapse Chat" : "Expand Chat"}
-            </button>
-            {/* Check if it is good to place the button here */}
-            <div className='chat'>
-              <div className='header-chat'>
-                <h3>Prompt:</h3>
-                <h3>Answer from ChatGPT:</h3>
-              </div>
-              <div className='content-chat'>
-                {chat.map((message, index) => (
-                  <ChatMessage index={index} key={index} role={message.role} content={message.content} />
-                ))}
-              </div>
+          <button disabled={chat.length < 4} className='app-button play-response-button' onClick={toggleChatExpansion} aria-label={isChatExpanded ? "Collapse Chat" : "Expand Chat"} tabIndex={3}>
+            {isChatExpanded ? "Collapse Chat" : "Expand Chat"}
+          </button>
+          {/* Check if it is good to place the button here */}
+          <div className='chat'>
+            <div className='header-chat'>
+              <h3>Prompt:</h3>
+              <h3>Answer from ChatGPT:</h3>
             </div>
-          </div>)}
-        <footer className='App-footer'>
-          <p>Current Version: {packagejson.version}</p>
-        </footer>
-      </div>
+            <div className='content-chat'>
+              {chat.map((message, index) => (
+                <ChatMessage index={index} key={index} role={message.role} content={message.content} playingMessageIndex={playingMessageIndex} isPlaying={isPlaying} isPaused={isPaused}/>
+              ))}
+            </div>
+          </div>
+        </div>)}
+      <footer className='App-footer'>
+        <p>Current Version: {packagejson.version}</p>
+      </footer>
     </div>
   );
 }
