@@ -73,6 +73,15 @@ p {
   margin-bottom: 2%;
 }
 
+@media (max-width: 630px) {
+  h1 {
+    font-size: 20px;
+  }
+  h2 {
+    margin: 8px;
+  }
+}
+
 .app-button {
   width: 100%;
   max-width: 20rem;
@@ -80,6 +89,15 @@ p {
   border: 2px solid white;
   box-shadow: none;
   border-radius: 20px;
+  margin: 10px;
+}
+
+/* Mobile View */
+@media (max-width: 630px) {
+  .app-button {
+    margin: 7px;
+    max-width: 15rem;
+  }
 }
 
 .app-button:disabled {
@@ -96,7 +114,6 @@ p {
 .speak-in-button {
   color: white;
   background-color: #F05039;
-  margin: 20px;
 }
 
 .audio-control-button-user {
@@ -163,6 +180,12 @@ p {
   color: white;
 }
 
+@media (max-width: 630px) {
+  .App-header {
+    padding: 0.5rem;
+  }
+}
+
 .App-body {
   /*outline: solid blue 2px;*/
   flex: 1;
@@ -220,6 +243,21 @@ p {
   margin-top: 5%;
 }
 
+@media (max-width: 630px) {
+  .chat {
+    margin-top: 4px;
+  }
+
+  .header-chat {
+    margin-top: 0px;
+    margin-bottom: 6px;
+  }
+
+  .content-chat {
+    max-height: 0px;
+  }
+}
+
 .content-chat {
   display: flex;
   flex-direction: column;
@@ -266,6 +304,15 @@ p {
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 60px;
   margin-bottom: 6%;
+}
+
+@media (max-width: 630px) {
+  .chat-ai {
+    margin-bottom: 10px;
+  }
+  .chat-user {
+    margin-bottom: 10px;
+  }
 }
 
 .play-audio-button {
@@ -351,10 +398,6 @@ p {
   .recording-sign {
     top: 2.5%;
     right: 3%;
-  }
-  .content-chat {
-    max-height: 40vh;
-    overflow-y: auto;
   }
 }
 

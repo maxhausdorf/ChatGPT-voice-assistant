@@ -182,3 +182,10 @@ If the button gets pressed, the whole chat history gets displayed.
 ## [6.5.0] - 2023-12-17
 ### Changed
 - After pausing the audio output the resume button gets focused now instead of the Speak in your prompt button."
+
+## [6.6.0] - 2023-12-18
+### Added
+- For the desktop view there is now a sidebar feature which constantly displays all the past chats.
+On mobile I left the Menu Overview (for now, further discuss this though, maybe it is not even needed to be there visually?)
+### Changed
+- In addition to the sidebar I changed some CSS settings to improve the design on mobile.
