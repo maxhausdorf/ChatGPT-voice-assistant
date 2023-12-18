@@ -189,3 +189,7 @@ If the button gets pressed, the whole chat history gets displayed.
 On mobile I left the Menu Overview (for now, further discuss this though, maybe it is not even needed to be there visually?)
 ### Changed
 - In addition to the sidebar I changed some CSS settings to improve the design on mobile.
+
+## [6.6.1] - 2023-12-18
+### Changed
+- Sidebar is only visible when application got started (Start Application Button got pressed)

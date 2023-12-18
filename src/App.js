@@ -444,10 +444,10 @@ function App() {
 
   return (
     <div className="App">
-      <div className="sidebar">
+      {audioEnabled && (<div className="sidebar">
         <h2>These are all the past chats.</h2>
         <ChatList />
-      </div>
+      </div>)}
       {isRecording && (<div className='recording-sign' aria-hidden='true'><MdMicNone className='microphone-icon' /></div>)}
       <div className='main-content'>
         <header className="App-header">
