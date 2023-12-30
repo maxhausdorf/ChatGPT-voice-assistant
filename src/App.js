@@ -19,6 +19,7 @@ function App() {
   const [isChatExpanded, setIsChatExpanded] = useState(null); // TO DO: if there is only one chat visible, no dropdown/summary is needed to display
   const [playingMessageIndex, setPlayingMessageIndex] = useState(null);
 
+
   async function sendChatGptRequest(chat) {
 
     const client = new OpenAIClient(process.env.REACT_APP_AZURE_OPENAI_ENDPOINT, new AzureKeyCredential(process.env.REACT_APP_AZURE_OPENAI_KEY));
@@ -34,27 +35,35 @@ function App() {
 
   const [audioEnabled, setAudioEnabled] = useState(false);
   const audioElementRef = useRef(new Audio());
+  const [micAccessDenied, setMicAccessDenied] = useState(false);
 
   //This function exists because of the autoplay barrier of iOS
   //By playing a mp3 file without any noise recorded the user agrees to audio being played (apparently)
-  function toggleAudio() {
+  async function toggleAudio() {
     localStorage.clear();
     if (!audioEnabled) {
       audioElementRef.current.src = '/ChatGPT-voice-assistant/one_minute_of_silence.mp3';
       audioElementRef.current.play();
     }
-    setAudioEnabled(!audioEnabled);
-    enableMicrophone(); //this needs to get awaited and if the promise is not resolved properly then audio should not get set to enabled (if the user denied access)
+    await enableMicrophone(); //this needs to get awaited and if the promise is not resolved properly then audio should not get set to enabled (if the user denied access)
+    //setAudioEnabled(!audioEnabled);
   }
 
   //This function requests access for the microphone from the user. Somehow this results in a decrease of the volume. TODO: investigate this and resolve this.
   async function enableMicrophone() {
     try {
-      await navigator.mediaDevices.getUserMedia({ audio: true });
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      //console.log("Microphone access granted: ", stream);
+      setMicAccessDenied(false);
+      //console.log("micAccessDenied state set to false");
+      setAudioEnabled(true);
       //Inform the user that the microphone is ready
 
     } catch (error) {
-      //Still TODO: Handle the error (user denied access etc.)
+      console.log("Error accessing microphone: ", error);
+      setMicAccessDenied(true);
+      console.log("micAccessDenied state set to true");
+      setAudioEnabled(false);
     }
   }
 
@@ -222,7 +231,7 @@ function App() {
       return (
         <div className='chat-user'>
           {/*  aria-label='chat message' tabIndex={tabIndex1}  */}
-          <h4 aria-label={'user message header: ' + title} tabIndex={tabIndex2}>Prompt {pairIndex} {title}</h4>
+          <h3 aria-label={'user message header: ' + title} tabIndex={tabIndex2}>Prompt {pairIndex} {title}</h3>
           {/*<p aria-label='user message' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>
@@ -244,7 +253,7 @@ function App() {
               <MdPlayArrow className='play-icon' />
               <MdRemove className='bar-icon' />
             </button>)}
-            <button className='audio-control-button-user' style={{ marginTop: "10px", fontSize: '40px', color: 'black', opacity: '0.0' }} ><MdPlayCircleOutline /></button> {/* This element is only here to keep the container from collapsing */}
+            <button className='audio-control-button-user' style={{ marginTop: "10px", fontSize: '40px', color: 'black', opacity: '0.0' }} tabIndex={-1} aria-hidden="true"><MdPlayCircleOutline /></button> {/* This element is only here to keep the container from collapsing */}
           </div>
         </div>
       )
@@ -252,11 +261,11 @@ function App() {
       return (
         <div className='chat-ai'>
           {/*  aria-label='chat message' tabIndex={tabIndex1}  */}
-          <h4 aria-label={'assistant message header: ' + title} tabIndex={tabIndex2}>Answer {pairIndex} {title}</h4>
+          <h3 aria-label={'assistant message header: ' + title} tabIndex={tabIndex2}>Answer {pairIndex} {title}</h3>
           {/*<p aria-label='assistant response' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>
-            <button className='audio-control-button-ai' style={{ marginTop: "10px", fontSize: '40px', color: 'white', opacity: '0.0' }} ><MdPlayCircleOutline /></button> {/* This element is only here to keep the container from collapsing */}
+            <button className='audio-control-button-ai' style={{ marginTop: "10px", fontSize: '40px', color: 'white', opacity: '0.0' }} tabIndex={-1} aria-hidden="true"><MdPlayCircleOutline /></button> {/* This element is only here to keep the container from collapsing */}
             {!isPlaying && (<button className='audio-control-button-ai' aria-label='Play Response Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} ><MdPlayCircleOutline /></button>)}
             {(index === playingMessageIndex) && isPlaying &&
               (<button className='audio-control-button-ai'
@@ -445,13 +454,16 @@ function App() {
   return (
     <div className="App">
       {audioEnabled && (<div className="sidebar">
-        <h2>These are all the past chats.</h2>
+
+        <h1>Navigation</h1>
+        <p>These are all the past chats.</p>
         <ChatList />
       </div>)}
       {isRecording && (<div className='recording-sign' aria-hidden='true'><MdMicNone className='microphone-icon' /></div>)}
       <div className='main-content'>
         <header className="App-header">
-          <h1>Welcome to the ChatGPT Voice Assistant</h1>
+          {!audioEnabled && (<h1>ChatGPT Voice Assistant</h1>)}
+          {audioEnabled && (<h1>ChatGPT Voice Assistant</h1>)}
           {/*<button style={{ height: "50px", width: "50px", backgroundColor: "red" }} onClick={inputSpeechFunction}></button>*/}
           {audioEnabled && !viewHistory && (<h2 className='instruction-header'>To create a prompt, press the second button below and start speaking. Wait for the response to speak.</h2>)}
         </header>
@@ -467,7 +479,6 @@ function App() {
             >
               View Chat History
             </button>
-
           </div>
         )}
         {viewHistory && !inMainMenu && (
@@ -481,10 +492,8 @@ function App() {
             <h2>These are all the past chats.</h2>
             <ChatList />
           </div>
-        )
-
-        }
-        {!audioEnabled && !viewHistory && !inMainMenu && (<div className='App-body'>
+        )}
+        {!audioEnabled && !viewHistory && !inMainMenu && !micAccessDenied && (<div className='App-body'>
           <h2>Please press the button below and allow microphone access when prompted.</h2>
           <button
             className='app-button start-button'
@@ -492,6 +501,12 @@ function App() {
             Start Application
           </button>
         </div>)}
+        {micAccessDenied && (
+          <div className='App-body'>
+            <h3>Microphone Access has been denied. Please refresh the page and allow access.</h3>
+            <button className='app-button' onClick={() => window.location.reload()}>Refresh page</button>
+          </div>
+        )}
         {audioEnabled && !viewHistory && !inMainMenu &&
           (<div className='App-body'>
             <button className='app-button main-menu'
@@ -535,6 +550,7 @@ function App() {
             </button>
             {/* Check if it is good to place the button here */}
             <div className='chat'>
+              <h1>Chat</h1>
               <div className='header-chat'>
                 <h3>Prompt:</h3>
                 <h3>Answer from ChatGPT:</h3>

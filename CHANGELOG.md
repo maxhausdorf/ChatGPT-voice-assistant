@@ -193,3 +193,11 @@ On mobile I left the Menu Overview (for now, further discuss this though, maybe 
 ## [6.6.1] - 2023-12-18
 ### Changed
 - Sidebar is only visible when application got started (Start Application Button got pressed)
+
+## [6.6.2] - 2023-12-30
+### Changed
+- When Microphone access gets rejected, a "refresh page" message gets shown with a button
+### Changed
+- Adapted header structure. Divided stuff up into Header, Navigation and Chat. They are all <h1> elements. Further refinement needed regarding the header structure.
+### Changed
+- Tabindex is zero for the icons which are only there to prevent the chatbox from collapsing
