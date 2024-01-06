@@ -201,3 +201,8 @@ On mobile I left the Menu Overview (for now, further discuss this though, maybe 
 - Adapted header structure. Divided stuff up into Header, Navigation and Chat. They are all <h1> elements. Further refinement needed regarding the header structure.
 ### Changed
 - Tabindex is zero for the icons which are only there to prevent the chatbox from collapsing
+
+## [6.6.3] - 2024-01-06
+### Added
+- Added the sidebar on mobile TODO: add the title as a header such that a screen reader reads the title when the item gets selected!
+- Because of this it was possible to remove the 'main menu' functionality

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { OpenAIClient } from '@azure/openai';
 import { AzureKeyCredential } from '@azure/openai';
 import packagejson from '../package.json';
-import { MdPlayCircleOutline, MdOutlinePauseCircleOutline, MdOutlinePanoramaFishEye, MdPlayArrow, MdRemove, MdMicNone } from "react-icons/md";
+import { MdChatBubbleOutline, MdChat, MdPlayCircleOutline, MdOutlinePauseCircleOutline, MdOutlinePanoramaFishEye, MdPlayArrow, MdRemove, MdMicNone } from "react-icons/md";
 
 
 
@@ -338,11 +338,37 @@ function App() {
     )
   }
 
+  function ChatListMobile() {
+    const chatData = localStorage.getItem('chatData');
+    if (!chatData) { return (<div className='chat-history'></div>) } //this fixed a bug when displaying the past chats without any chats existing
+    const chatObject = JSON.parse(chatData);
+    const chatNames = Object.keys(chatObject);
+    //console.log('These are all the chat names!');
+    //console.log(chatNames);
+
+    return (
+      <div className='chat-history' style={{marginTop: '15px', backgroundColor: 'none'}}>
+        {chatNames.map((chatName, index) => (
+          <button
+            key={index}
+            disabled={isPlaying || isRecording}
+            onClick={() => { goToChat(chatName) }}
+            style={{display: 'flex', borderRadius: '10px', alignItems: 'center', justifyContent: 'center', background: 'blue', border: '1px solid white', padding: '0px', width: '43px', height: '38px', marginBottom: '10px', overflow: 'scroll'}}
+          >
+            <MdChatBubbleOutline style={{ fontSize: '30px', color: 'white'}}/>
+            <span style={{marginLeft: '2px', marginBottom: '5px', color: 'white', position: 'absolute', fontSize: '15px'}}>{index+1}</span>
+          </button>
+        ))}
+      </div>
+    )
+  }
+
   function goToChat(chatName) {
     setViewHistory(false);
     setTitleCurrentChat(chatName);
     const chatData = localStorage.getItem('chatData');
     const chatObject = JSON.parse(chatData);
+    //console.log(chatObject[chatName]); Started debugging the faulty numeration TODO: solve this!
     const chatHistory = chatObject[chatName];
     setChat(chatHistory);
   }
@@ -453,8 +479,11 @@ function App() {
 
   return (
     <div className="App">
+      {audioEnabled && (<div className="sidebar-mobile">
+        <MdChat className='chat-icon'/>
+        <ChatListMobile />
+      </div>)}
       {audioEnabled && (<div className="sidebar">
-
         <h1>Navigation</h1>
         <p>These are all the past chats.</p>
         <ChatList />
@@ -483,12 +512,12 @@ function App() {
         )}
         {viewHistory && !inMainMenu && (
           <div className='App-body'>
-            <button className='app-button main-menu'
+            {/*<button className='app-button main-menu'
               disabled={isPlaying || isRecording}
               onClick={() => setInMainMenu(true)}
             >
               Go Back To Main Menu
-            </button>
+        </button>*/}
             <h2>These are all the past chats.</h2>
             <ChatList />
           </div>
@@ -509,13 +538,19 @@ function App() {
         )}
         {audioEnabled && !viewHistory && !inMainMenu &&
           (<div className='App-body'>
-            <button className='app-button main-menu'
+            {/*<button className='app-button main-menu'
               onClick={() => setInMainMenu(true)}
               disabled={isPlaying || isRecording}
               tabIndex={1}
             >
               Menu Overview
-            </button>
+            </button>*/}
+            {isSmallScreen &&
+            <button className='app-button create-chat' tabIndex={1}
+              onClick={createNewChat}
+            >
+              Create a new chat
+            </button>}
             {!isSmallScreen && (<button className='app-button create-chat'
               onClick={createNewChat}
             >
@@ -550,7 +585,7 @@ function App() {
             </button>
             {/* Check if it is good to place the button here */}
             <div className='chat'>
-              <h1>Chat</h1>
+              <h1 style={{alignSelf: 'center'}}>Chat</h1>
               <div className='header-chat'>
                 <h3>Prompt:</h3>
                 <h3>Answer from ChatGPT:</h3>

@@ -37,6 +37,27 @@
   }
 }
 
+.sidebar-mobile {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+  background-color: rgb(114, 114, 114);
+  height: 100vh;
+  overflow-x: hidden;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding: 9px;
+  color: white;
+  align-items: center;
+}
+
+/* Mobile View */
+@media (min-width: 630px) {
+  .sidebar-mobile {
+    display: none;
+  }
+}
+
 .main-content {
   display: flex;
   flex-direction: column;
@@ -78,6 +99,11 @@ p {
   }
   h2 {
     margin: 8px;
+  }
+  h3 {
+    font-size: 15px;
+    margin-top: 7px;
+    margin-bottom: 0;
   }
 }
 
@@ -249,7 +275,7 @@ p {
 
   .header-chat {
     margin-top: 0px;
-    margin-bottom: 6px;
+    margin-bottom: 15px;
   }
 
   .content-chat {
@@ -361,6 +387,11 @@ p {
 
 .circle-icon {
   
+}
+
+.chat-icon {
+  display: flex;
+  font-size: 35px;
 }
 
 .play-icon {
