@@ -231,7 +231,7 @@ function App() {
       return (
         <div className='chat-user'>
           {/*  aria-label='chat message' tabIndex={tabIndex1}  */}
-          <h3 aria-label={'user message header: ' + title} tabIndex={tabIndex2}>Prompt {pairIndex} {title}</h3>
+          <h3 aria-label={'user message header: ' + title} tabIndex={tabIndex2}>{`Prompt ${pairIndex} ${title}`}</h3>
           {/*<p aria-label='user message' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>
@@ -261,7 +261,7 @@ function App() {
       return (
         <div className='chat-ai'>
           {/*  aria-label='chat message' tabIndex={tabIndex1}  */}
-          <h3 aria-label={'assistant message header: ' + title} tabIndex={tabIndex2}>Answer {pairIndex} {title}</h3>
+          <h3 aria-label={'assistant message header: ' + title} tabIndex={tabIndex2}>{`Answer ${pairIndex} ${title}`}</h3>
           {/*<p aria-label='assistant response' tabIndex={tabIndex3}>{content}</p>*/}
           <p>{content}</p>
           <div className='audio-controls'>

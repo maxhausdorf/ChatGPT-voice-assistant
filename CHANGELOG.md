@@ -201,3 +201,7 @@ On mobile I left the Menu Overview (for now, further discuss this though, maybe 
 - Adapted header structure. Divided stuff up into Header, Navigation and Chat. They are all <h1> elements. Further refinement needed regarding the header structure.
 ### Changed
 - Tabindex is zero for the icons which are only there to prevent the chatbox from collapsing
+
+## [6.6.3] - 2024-01-15
+### Fixed
+- Header of a chat message is now one coherent string.
