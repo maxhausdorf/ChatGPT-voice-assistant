@@ -205,3 +205,7 @@ On mobile I left the Menu Overview (for now, further discuss this though, maybe 
 ## [6.6.3] - 2024-01-15
 ### Fixed
 - Header of a chat message is now one coherent string.
+
+## [6.6.4] - 2024-01-15
+### Changed
+- Put the audio controls of a chatmessage below its header and on top of its content

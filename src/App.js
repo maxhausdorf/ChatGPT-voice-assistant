@@ -233,7 +233,6 @@ function App() {
           {/*  aria-label='chat message' tabIndex={tabIndex1}  */}
           <h3 aria-label={'user message header: ' + title} tabIndex={tabIndex2}>{`Prompt ${pairIndex} ${title}`}</h3>
           {/*<p aria-label='user message' tabIndex={tabIndex3}>{content}</p>*/}
-          <p>{content}</p>
           <div className='audio-controls'>
             {!isPlaying && (<button className='audio-control-button-user' aria-label='Play Prompt Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} ><MdPlayCircleOutline /></button>)}
             {(index === playingMessageIndex) && isPlaying &&
@@ -255,6 +254,7 @@ function App() {
             </button>)}
             <button className='audio-control-button-user' style={{ marginTop: "10px", fontSize: '40px', color: 'black', opacity: '0.0' }} tabIndex={-1} aria-hidden="true"><MdPlayCircleOutline /></button> {/* This element is only here to keep the container from collapsing */}
           </div>
+          <p>{content}</p>
         </div>
       )
     } else if (role === "assistant") {
@@ -263,7 +263,6 @@ function App() {
           {/*  aria-label='chat message' tabIndex={tabIndex1}  */}
           <h3 aria-label={'assistant message header: ' + title} tabIndex={tabIndex2}>{`Answer ${pairIndex} ${title}`}</h3>
           {/*<p aria-label='assistant response' tabIndex={tabIndex3}>{content}</p>*/}
-          <p>{content}</p>
           <div className='audio-controls'>
             <button className='audio-control-button-ai' style={{ marginTop: "10px", fontSize: '40px', color: 'white', opacity: '0.0' }} tabIndex={-1} aria-hidden="true"><MdPlayCircleOutline /></button> {/* This element is only here to keep the container from collapsing */}
             {!isPlaying && (<button className='audio-control-button-ai' aria-label='Play Response Audio' tabIndex={tabIndex4} role='button' style={{ marginTop: "10px", fontSize: '40px' }} onClick={() => (textToSpeech(content, index))} ><MdPlayCircleOutline /></button>)}
@@ -284,6 +283,7 @@ function App() {
               <MdRemove className='bar-icon' />
             </button>)}
           </div>
+          <p>{content}</p>
         </div>
       )
     }
