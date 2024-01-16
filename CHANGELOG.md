@@ -208,4 +208,13 @@ On mobile I left the Menu Overview (for now, further discuss this though, maybe 
 
 ## [6.6.4] - 2024-01-15
 ### Changed
-- Put the audio controls of a chatmessage below its header and on top of its content
+- Put the audio controls of a chatmessage below its header and on top of its content.
+
+## [6.6.5] - 2024-01-16
+### Added
+- Added a collapsable component and included it in the chat history. If the chat history get opened, the focus gets set on the "today" button.
+If no content is available then "No chats available" gets displayed.
+### Changed
+- Included the audio controls directly inside of a chat message.
+### Removed
+- Got rid of the "Prompt" and "Answer from ChatGPT" headers in the header chat. (Could remove the header chat completely now...)
