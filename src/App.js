@@ -25,7 +25,11 @@ function App() {
     const client = new OpenAIClient(process.env.REACT_APP_AZURE_OPENAI_ENDPOINT, new AzureKeyCredential(process.env.REACT_APP_AZURE_OPENAI_KEY));
     const deploymentId = "gpt35";
 
-    const result = await client.getChatCompletions(deploymentId, chat);
+    const options = {
+      maxTokens: 100
+    }
+
+    const result = await client.getChatCompletions(deploymentId, chat, options);
     const response = result.choices[0].message.content;
     //console.log("This is the response!");
     //console.log(response);
@@ -452,9 +456,9 @@ function App() {
     }, 20);
   }
 
-  /*  async function inputSpeechFunction() {
+    async function inputSpeechFunction() {
     //This function only exists because I am not able to input any stuff as speech in the library!
-    let generatedPrompt = "This is a sample input, reply with a story. Use about one short sentence."
+    let generatedPrompt = "Tell me a story."
     let userChatUpdate = await updateChat({ role: "user", content: generatedPrompt });
     console.log("This is the updated chat after the prompt of the user:", userChatUpdate);
 
@@ -468,7 +472,7 @@ function App() {
     //console.log(requestGotSent);
     textToSpeech(response);
   }
-*/
+
   //const Collapsible = React.forwardRef(( title, children, defaultOpen, firstChildRef, isAHeader, ref ) => {
   const Collapsible = React.forwardRef(( props, ref ) => {
     const [isOpen, setIsOpen] = useState(props.defaultOpen || false);
@@ -580,7 +584,7 @@ function App() {
             </div>
           )}
 
-          {/*<button style={{ height: "50px", width: "50px", backgroundColor: "red" }} onClick={inputSpeechFunction}></button>*/}
+          <button style={{ height: "50px", width: "50px", backgroundColor: "red" }} onClick={inputSpeechFunction}></button>
         </div>
         {inMainMenu && (
           <div className='App-body'>

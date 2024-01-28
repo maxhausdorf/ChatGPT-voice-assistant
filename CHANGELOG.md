@@ -245,3 +245,8 @@ This is different for the system, here the audio controls are included in the he
 - "Speak in your prompt" button now is called "Speak in" button
 ### Changed
 - Removed the footer with the versioning.
+
+## [7.0.1] - 2024-01-16
+### Changed
+- Changed maxToken value (which handles the length of the prompt output) such that prompts get generated faster.
+TODO: test out how low this value can be without badly influencing the user experience.
