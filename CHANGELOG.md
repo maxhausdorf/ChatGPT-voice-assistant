@@ -219,7 +219,7 @@ If no content is available then "No chats available" gets displayed.
 ### Removed
 - Got rid of the "Prompt" and "Answer from ChatGPT" headers in the header chat. (Could remove the header chat completely now...)
 
-## [7.0.0] - 2024-01-16
+## [7.0.0] - 2024-01-28
 ### Changed
 - Changed the initial message to the system. (response should not be longer than 100 words)
 ### Added
@@ -246,7 +246,11 @@ This is different for the system, here the audio controls are included in the he
 ### Changed
 - Removed the footer with the versioning.
 
-## [7.0.1] - 2024-01-16
+## [7.0.1] - 2024-01-28
 ### Changed
 - Changed maxToken value (which handles the length of the prompt output) such that prompts get generated faster.
 TODO: test out how low this value can be without badly influencing the user experience.
+
+## [7.1.0] - 2024-01-29
+### Changed
+- As some responses include unfinished sentences at the end, the unfinished part gets cut off up until the last dot. This got caused by the token limit.
