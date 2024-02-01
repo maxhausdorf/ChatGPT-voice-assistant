@@ -73,7 +73,8 @@ function App() {
 
       const sdk = require("microsoft-cognitiveservices-speech-sdk");
       const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.REACT_APP_SPEECH_KEY, process.env.REACT_APP_SPEECH_REGION);
-      speechConfig.speechRecognitionLanguage = 'en-US';
+      //speechConfig.speechRecognitionLanguage = 'en-US';
+      speechConfig.speechRecognitionLanguage = 'de-DE';
 
       const audioConfig = sdk.AudioConfig.fromDefaultMicrophoneInput();
       const recognizer = new sdk.SpeechRecognizer(speechConfig, audioConfig);
@@ -106,6 +107,7 @@ function App() {
   const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.REACT_APP_SPEECH_KEY, process.env.REACT_APP_SPEECH_REGION);
   //The line below changes the default voice. In localhost this sometimes caused weird behaviour - keep that in mind.
   //speechConfig.speechSynthesisVoiceName = 'en-US-BrandonNeural';
+  speechConfig.speechSynthesisVoiceName = 'de-DE-KatjaNeural';
   const myPlayer = new sdk.SpeakerAudioDestination();
   const audioConfigTTS = sdk.AudioConfig.fromSpeakerOutput(myPlayer);
   let synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfigTTS);
