@@ -86,7 +86,8 @@ function App() {
 
       const sdk = require("microsoft-cognitiveservices-speech-sdk");
       const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.REACT_APP_SPEECH_KEY, process.env.REACT_APP_SPEECH_REGION);
-      speechConfig.speechRecognitionLanguage = 'en-US';
+      //speechConfig.speechRecognitionLanguage = 'en-US';
+      speechConfig.speechRecognitionLanguage = 'de-DE';
 
       speechConfig.setProperty("SpeechServiceConnection_InitialSilenceTimeoutMs", "8000"); //How long can you be silent at the beginnig until an error occurs. Does not really need to get adapted, default is at about 5000ms
       //speechConfig.setProperty("SpeechServiceConnection_EndSilenceTimeoutMs", "1000000"); //How long it should continue to record speech after input. Adapting value does not change anything - open issue for microsoft
@@ -124,6 +125,7 @@ function App() {
   const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.REACT_APP_SPEECH_KEY, process.env.REACT_APP_SPEECH_REGION);
   //The line below changes the default voice. In localhost this sometimes caused weird behaviour - keep that in mind.
   //speechConfig.speechSynthesisVoiceName = 'en-US-BrandonNeural';
+  speechConfig.speechSynthesisVoiceName = 'de-DE-KatjaNeural';
   const myPlayer = new sdk.SpeakerAudioDestination();
   const audioConfigTTS = sdk.AudioConfig.fromSpeakerOutput(myPlayer);
   let synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfigTTS);
