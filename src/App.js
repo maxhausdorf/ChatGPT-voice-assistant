@@ -26,7 +26,7 @@ function App() {
     const deploymentId = "gpt35";
 
     const options = {
-      maxTokens: 100 //adjust this value to 100 if generating time still takes too long for good UX
+      maxTokens: 500 //adjust this value to 100 if generating time still takes too long for good UX
     }
 
     const result = await client.getChatCompletions(deploymentId, chat, options);
@@ -89,7 +89,7 @@ function App() {
       //speechConfig.speechRecognitionLanguage = 'en-US';
       speechConfig.speechRecognitionLanguage = 'de-DE';
 
-      speechConfig.setProperty("SpeechServiceConnection_InitialSilenceTimeoutMs", "8000"); //How long can you be silent at the beginnig until an error occurs. Does not really need to get adapted, default is at about 5000ms
+      //speechConfig.setProperty("SpeechServiceConnection_InitialSilenceTimeoutMs", "8000"); //How long can you be silent at the beginnig until an error occurs. Does not really need to get adapted, default is at about 5000ms
       //speechConfig.setProperty("SpeechServiceConnection_EndSilenceTimeoutMs", "1000000"); //How long it should continue to record speech after input. Adapting value does not change anything - open issue for microsoft
 
       //speechConfig.setProperty("Speech_SegmentationSilenceTimeoutMs", "8000"); //Value change doesn't do anything except set it to 0.
@@ -469,7 +469,7 @@ function App() {
 
    /* async function inputSpeechFunction() {
     //This function only exists because I am not able to input any stuff as speech in the library!
-    let generatedPrompt = "Tell me a story."
+    let generatedPrompt = "Ich möchte einem 4-jährigen Kind ein Geburtstagsgeschenk machen. Gib mir Vorschläge dafür."
     let userChatUpdate = await updateChat({ role: "user", content: generatedPrompt });
     console.log("This is the updated chat after the prompt of the user:", userChatUpdate);
 
