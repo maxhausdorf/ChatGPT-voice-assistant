@@ -207,6 +207,7 @@ p {
   padding-left: 17px;
   padding-right: 17px;
   padding-top: 2%;
+  display: none;
 }
 
 .instruction-header {

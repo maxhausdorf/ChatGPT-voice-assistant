@@ -218,3 +218,39 @@ If no content is available then "No chats available" gets displayed.
 - Included the audio controls directly inside of a chat message.
 ### Removed
 - Got rid of the "Prompt" and "Answer from ChatGPT" headers in the header chat. (Could remove the header chat completely now...)
+
+## [7.0.0] - 2024-01-28
+### Changed
+- Changed the initial message to the system. (response should not be longer than 100 words)
+### Added
+- Added a delete button to manually delete the chat history. History does not get deleted anymore when application gets started.
+### Added
+- Investigated the possibility to adapt the timeouts durations of the speech. So e.g. how long there should be no voice input until the
+app thinks you finished your speech. Does not work properly though, apparently this is a known issue.
+### Changed
+- Changed error message when no voice input happened to "ERROR: Speech could not be recognized. Wait for the audio signal to finish and start speaking."
+### Added
+- Added a whole new navigation system with a collapse functionality. There are now two main navigation buttons. 1. Chat-GPT-Voice-Assistant and 2. Chat Navigation. The first one gives access to the chat history and to create a new chat. The second one allows to collapse the current navigation.
+### Changed
+- Changed the focus setting such that the top button gets focused on when the microphone access got granted on mobile.
+### Changed
+- Adapted the header structure. The user and assistant "Chat Bubbles" are now different. The user chat bubble does not have a paragraph anymore because prompts
+tend to be shorter than the answer - the prompt is now included in the heading. The audio controls are not in the heading element.
+This is different for the system, here the audio controls are included in the heading element and the response is still in a pragraph element.
+### Changed
+- The chat history is now an unsorted list with list items. There is a ref to determine the first list item such that the focus can be set on it when opening the history.
+### Changed
+- A collapsible now is wrapped in a h1 element if it gets specified to be a header.
+### Changed
+- "Speak in your prompt" button now is called "Speak in" button
+### Changed
+- Removed the footer with the versioning.
+
+## [7.0.1] - 2024-01-28
+### Changed
+- Changed maxToken value (which handles the length of the prompt output) such that prompts get generated faster.
+TODO: test out how low this value can be without badly influencing the user experience.
+
+## [7.1.0] - 2024-01-29
+### Changed
+- As some responses include unfinished sentences at the end, the unfinished part gets cut off up until the last dot. This got caused by the token limit.
